@@ -10,6 +10,14 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require_tree .
- *= require_self
  */
+
+@import url(https://fonts.googleapis.com/css?family=Cabin+Sketch:700);
+$navbar-inverse-bg: #704E2E;
+$gray-light: #E6F8B2;
+
+$font-family-base: 'Cabin Sketch', Helvetica, Arial, sans-serif;
+
+
+@import "bootstrap-sprockets";
+@import "bootstrap";

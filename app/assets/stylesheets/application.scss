@@ -12,11 +12,18 @@
  *
  */
 
-@import url(https://fonts.googleapis.com/css?family=Cabin+Sketch:700);
+/*@import url(https://fonts.googleapis.com/css?family=Cabin+Sketch:700);*/
+@import url(https://fonts.googleapis.com/css?family=Fredericka+the+Great);
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
 $navbar-inverse-bg: #704E2E;
 $gray-light: #E6F8B2;
 
-$font-family-base: 'Cabin Sketch', Helvetica, Arial, sans-serif;
+$headings-font-family: 'Fredericka the Great', Helvetica, Arial, sans-serif;
+$font-family-base: 'Roboto', Open Sans;
+$font-size-base: 16px;
+$brand-primary: #709176;
+$input-border-focus: #709176;
 
 
 @import "bootstrap-sprockets";

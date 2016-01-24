@@ -1,3 +1,4 @@
+require 'byebug'
 class CategoriesController < ApplicationController
   before_action :set_category, only: [:show, :edit, :update, :destroy]
 
@@ -15,6 +16,9 @@ class CategoriesController < ApplicationController
   # GET /categories/new
   def new
     @category = Category.new
+
+    # just to know, if it came from projects page
+    @@from_project = params[:from_project]
   end
 
   # GET /categories/1/edit
@@ -28,7 +32,11 @@ class CategoriesController < ApplicationController
 
     respond_to do |format|
       if @category.save
-        format.html { redirect_to @category, notice: 'Category was successfully created.' }
+        if @@from_project
+          format.html { redirect_to new_project_path, notice: 'Category was successfully created.' }
+        else         
+          format.html { redirect_to @category, notice: 'Category was successfully created.' }
+        end
         format.json { render :show, status: :created, location: @category }
       else
         format.html { render :new }
@@ -69,6 +77,6 @@ class CategoriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def category_params
-      params.require(:category).permit(:name, :color)
+      params.require(:category).permit(:name, :color, :from_project)
     end
 end

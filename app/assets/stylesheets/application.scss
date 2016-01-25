@@ -16,14 +16,24 @@
 @import url(https://fonts.googleapis.com/css?family=Fredericka+the+Great);
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
-$navbar-inverse-bg: #704E2E;
+$brown: #704E2E;
+$light-brown: #79745C;
+$green: #709176;
+
+$navbar-inverse-bg: $brown;
 $gray-light: #E6F8B2;
 
 $headings-font-family: 'Fredericka the Great', Helvetica, Arial, sans-serif;
 $font-family-base: 'Roboto', Open Sans;
 $font-size-base: 16px;
-$brand-primary: #709176;
-$input-border-focus: #709176;
+$brand-primary: $green;
+$input-border-focus: $green;
+$link-hover-decoration: none;
+$table-border-color: $light-brown;
+
+$panel-bg: #f6f6f6;
+$panel-border-radius: 0px;
+$panel-body-padding: 20px;
 
 
 @import "bootstrap-sprockets";

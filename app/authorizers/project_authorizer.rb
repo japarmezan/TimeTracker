@@ -1,5 +1,5 @@
 # Other authorizers should subclass this one
-class ApplicationAuthorizer < Authority::Authorizer
+class ProjectAuthorizer < ApplicationAuthorizer
 
   # Any class method from Authority::Authorizer that isn't overridden
   # will call its authorizer's default method.
@@ -17,11 +17,23 @@ class ApplicationAuthorizer < Authority::Authorizer
     resource.author == user
   end
 
+  def self.updatable_by?(user)
+    user != nil
+  end
+
   def readable_by?(user)
     true
   end
 
+  def self.readable_by?(user)
+    true
+  end
+
   def creatable_by?(user)
+    true
+  end
+
+  def self.creatable_by?(user)
     true
   end
 

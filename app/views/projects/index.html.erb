@@ -24,10 +24,8 @@
           <tr>
             <td class="h3 no-underline"><%= link_to project.name, project %></td>
             <td><%= project.description %></td>
-            <% if project.updatable_by?(current_user) %>
-              <td><%= link_to '<span class="glyphicon glyphicon-pencil lead" aria-hidden="true"></span>'.html_safe, edit_project_path(project) %></td>
-              <td><%= link_to '<span class="glyphicon glyphicon-trash lead" aria-hidden="true"></span>'.html_safe, project, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-            <% end %>
+            <td><%= link_to '<span class="glyphicon glyphicon-pencil lead" aria-hidden="true"></span>'.html_safe, edit_project_path(project) if project.updatable_by?(current_user) %></td>
+            <td><%= link_to '<span class="glyphicon glyphicon-trash lead" aria-hidden="true"></span>'.html_safe, project, method: :delete, data: { confirm: 'Are you sure?' } if project.updatable_by?(current_user) %></td>
           </tr>
         <% end %>
       </tbody>

@@ -2,7 +2,7 @@ require 'byebug'
 class ProjectsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_project, only: [:show, :edit, :update, :destroy, :start, :stop]
-
+  authorize_actions_for Project, :actions => {:destroy => :update}
   # GET /projects
   # GET /projects.json
   def index
@@ -40,22 +40,24 @@ class ProjectsController < ApplicationController
 
   # GET /projects/new
   def new
-    @project = Project.new
+    @project = current_user.projects.new
+    authorize_action_for @project
     @categories = Category.where(user_id: nil) + current_user.categories
   end
 
   # GET /projects/1/edit
   def edit
+    authorize_action_for @project
+    @categories = Category.where(user_id: nil) + current_user.categories
   end
 
   # POST /projects
   # POST /projects.json
   def create
-    @project = Project.new(project_params)
-
+    @project = current_user.projects.new(project_params)
+    authorize_action_for @project
     respond_to do |format|
       if @project.save
-        current_user.projects << @project
         format.html { redirect_to @project, notice: 'Project was successfully created.' }
         format.json { render :show, status: :created, location: @project }
       else
@@ -71,6 +73,7 @@ class ProjectsController < ApplicationController
   # PATCH/PUT /projects/1
   # PATCH/PUT /projects/1.json
   def update
+    authorize_action_for @project
     respond_to do |format|
       if @project.update(project_params)
         format.html { redirect_to @project, notice: 'Project was successfully updated.' }
@@ -85,6 +88,7 @@ class ProjectsController < ApplicationController
   # DELETE /projects/1
   # DELETE /projects/1.json
   def destroy
+    authorize_action_for @project
     @project.destroy
     respond_to do |format|
       format.html { redirect_to projects_url, notice: 'Project was successfully destroyed.' }

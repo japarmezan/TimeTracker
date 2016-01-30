@@ -5,7 +5,7 @@ class CategoriesController < ApplicationController
   # GET /categories
   # GET /categories.json
   def index
-    @categories = Category.all
+    @categories = Category.where(user_id: nil) + current_user.categories
   end
 
   # GET /categories/1
@@ -32,6 +32,7 @@ class CategoriesController < ApplicationController
 
     respond_to do |format|
       if @category.save
+        current_user.categories << @category
         if @@from_project
           format.html { redirect_to new_project_path, notice: 'Category was successfully created.' }
         else         

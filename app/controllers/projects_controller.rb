@@ -41,7 +41,7 @@ class ProjectsController < ApplicationController
   # GET /projects/new
   def new
     @project = Project.new
-    @categories = Category.all
+    @categories = Category.where(user_id: nil) + current_user.categories
   end
 
   # GET /projects/1/edit

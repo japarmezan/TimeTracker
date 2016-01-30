@@ -1,14 +1,36 @@
-<p id="notice"><%= notice %></p>
+<% if flash[:notice] %>
+  <div class="alert alert-success alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <%= notice %>
+  </div>
+<% end %>
 
-<p>
-  <strong>Name:</strong>
-  <%= @project.name %>
-</p>
+<div class="panel panel-default">
+  <div class="panel-body">
+	<h1>
+	  <%= @project.name %>
+	</h1>
 
-<p>
-  <strong>Description:</strong>
-  <%= @project.description %>
-</p>
+	<p class="margin-bottom" >
+	  <%= @project.description %>
+	</p>
+
+	<% if !@track || @track.end %>
+	<%= button_to 'Start', { action: "start", id: @project }, { :class=>"btn btn-success btn-lg margin-bottom" } %>
+	<% else %>
+	<%= button_to 'Stop', { action: "stop", id: @project }, { :class=>"btn btn-danger btn-lg margin-bottom" } %>
+	<% end %>
+
+	</br>
+
+
+ </div>
+</div>
+
+<%= render 'track_form' %>
+
+<%= render 'tracks' %>
+
 
 <%= link_to 'Edit', edit_project_path(@project) %> |
 <%= link_to 'Back', projects_path %>

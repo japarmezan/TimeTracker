@@ -1,0 +1,28 @@
+
+<div class="panel panel-default">
+  <div class="panel-body">
+    <table class="table table-condensed table-hover">
+      <thead>
+        <tr>
+          <th>From</th>
+          <th>To</th>
+          <th>Length</th>
+          <th>Comment</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @tracks.each do |track| %>
+          <tr>
+            <td class="no-underline"><%= track.start %></td>
+            <td><%= track.end %></td>
+            <td><%= distance_of_time_in_words(track.start, track.end) if track.end %></td>
+            <td><%= track.comment %></td>
+            <td><%= link_to '<span class="glyphicon glyphicon-trash lead" aria-hidden="true"></span>'.html_safe, { action: 'delete_track', id: track.id}, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

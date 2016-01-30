@@ -1,0 +1,55 @@
+<div class="panel panel-default">
+  <div class="panel-body">
+    <div class="form-inline">
+      <p class="lead">Or add your time track directly: </p>  
+      <%= form_for (@track), url: {action: "create"} do |f| %>
+        <% if @track.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@project.errors.count, "error") %> prohibited this track from being saved:</h2>
+            <ul>
+            <% @project.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <div class="col-md-6">
+          <div class="field form-group">
+            <%= f.label :start %>
+            <%= f.datetime_select :start, {}, :class=>"form-control" %>
+          </div>
+
+          </br>
+          </br>
+          <div class="field form-group">
+            <%= f.label :end %>
+            <%= f.datetime_select :end, {}, :class=>"form-control" %>
+          </div>
+
+          </br>
+          </br>
+          <div class="field form-group">
+            <%= f.label :label %>
+            <%= f.select :label, options_for_select(["Label 1", "Label 2", "More labels", "Lots of labels"]), {}, { :class => 'form-control'} %>
+          </div>
+
+          </br>
+          </br>
+          <div class="actions form-group">
+            <%= f.submit 'Add time track', :class=>"btn btn-brand"%>
+          </div>
+        </div>
+
+        <div class="col-md-5">
+          <div class="field form-group">
+            <%= f.label :comment %>
+            <%= f.text_area :comment, :class=>"form-control" %>
+          </div>
+        </div>
+          
+
+      <% end %>
+    </div>
+  </div>
+</div>

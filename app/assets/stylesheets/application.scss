@@ -35,6 +35,13 @@ $panel-bg: #f6f6f6;
 $panel-border-radius: 0px;
 $panel-body-padding: 20px;
 
+.margin-top {
+	margin-top: 2em;
+}
+
+.margin-bottom {
+	margin-bottom: 2em;
+}
 
 @import "bootstrap-sprockets";
 @import "bootstrap";

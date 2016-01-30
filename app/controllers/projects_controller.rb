@@ -1,6 +1,7 @@
+require 'byebug'
 class ProjectsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_project, only: [:show, :edit, :update, :destroy]
+  before_action :set_project, only: [:show, :edit, :update, :destroy, :start, :stop]
 
   # GET /projects
   # GET /projects.json
@@ -11,6 +12,30 @@ class ProjectsController < ApplicationController
   # GET /projects/1
   # GET /projects/1.json
   def show
+    @tracks = @project.tracks.order(created_at: :desc)
+    @track = @tracks.first
+  end
+
+  # POST /projects/1/start
+  def start
+    @track = Track.new
+    @track.start = DateTime.now
+    if @track.save
+      @project.tracks << @track
+      redirect_to @project, notice: 'Work on project started.'
+    else
+      redirect_to @project, alert: 'Could not start work on project.'
+    end
+  end
+
+  # PATCH /projects/1/stop
+  def stop
+    @track = @project.tracks.order(:created_at).last
+    if @track.update(:end => DateTime.now)
+      redirect_to @project, notice: 'Work on project stopped.'
+    else
+      redirect_to @project, alert: 'Could not stop work on project.'
+    end
   end
 
   # GET /projects/new
@@ -39,6 +64,9 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def create_track
+  end
+
   # PATCH/PUT /projects/1
   # PATCH/PUT /projects/1.json
   def update
@@ -61,6 +89,13 @@ class ProjectsController < ApplicationController
       format.html { redirect_to projects_url, notice: 'Project was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+
+  # DELETE /tracks/1
+  def delete_track
+    Track.find(params[:id]).destroy
+    redirect_to @project, notice: 'Track was successfully deleted.'
   end
 
   private

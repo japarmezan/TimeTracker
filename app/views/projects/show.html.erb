@@ -15,6 +15,9 @@
 	  <%= @project.description %>
 	</p>
 
+      <h5>Contributors:</h5>
+      <p><%= @project.coworkers.map {|t| t.email}.join(', ') %></p>
+
 	<% if !@track || @track.end %>
 	<%= button_to 'Start', { action: "start", id: @project }, { :class=>"btn btn-success btn-lg margin-bottom" } %>
 	<% else %>

@@ -2,11 +2,11 @@ require 'byebug'
 class ProjectsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_project, only: [:show, :edit, :update, :destroy, :start, :stop]
-  authorize_actions_for Project, :actions => {:destroy => :update}
+  authorize_actions_for Project, :actions => {:destroy => :update, :start => :read, :stop => :read}
   # GET /projects
   # GET /projects.json
   def index
-    @projects = Project.all#current_user.projects
+    @projects = current_user.projects + current_user.tasks
   end
 
   # GET /projects/1
@@ -58,6 +58,7 @@ class ProjectsController < ApplicationController
     authorize_action_for @project
     respond_to do |format|
       if @project.save
+        manage_contributors
         format.html { redirect_to @project, notice: 'Project was successfully created.' }
         format.json { render :show, status: :created, location: @project }
       else
@@ -76,6 +77,7 @@ class ProjectsController < ApplicationController
     authorize_action_for @project
     respond_to do |format|
       if @project.update(project_params)
+        manage_contributors
         format.html { redirect_to @project, notice: 'Project was successfully updated.' }
         format.json { render :show, status: :ok, location: @project }
       else
@@ -112,5 +114,32 @@ class ProjectsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
       params.require(:project).permit(:name, :description)
+    end
+
+    def contributor_params
+      params[:project][:contributors].tr(',', ' ').split
+    end
+
+    def manage_contributors
+      add_new_contributors
+      remove_redundant_contributors
+    end
+
+    def add_new_contributors
+      contributors = contributor_params
+      contributors.each do |c|
+        if @project.coworkers.where(:email => c).length == 0
+          @project.coworkers << User.where(:email => c)
+        end
+      end
+    end
+
+    def remove_redundant_contributors
+      contributors = contributor_params
+      @project.coworkers.each do |c|
+        unless contributors.include?(c.email)
+          @project.coworkers.delete(c)
+        end
+      end
     end
 end

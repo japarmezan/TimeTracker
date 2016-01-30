@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160130164504) do
+ActiveRecord::Schema.define(version: 20160130201823) do
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
@@ -22,6 +22,14 @@ ActiveRecord::Schema.define(version: 20160130164504) do
   end
 
   add_index "categories", ["user_id"], name: "index_categories_on_user_id"
+
+  create_table "contributors", id: false, force: :cascade do |t|
+    t.integer "project_id"
+    t.integer "user_id"
+  end
+
+  add_index "contributors", ["project_id", "user_id"], name: "index_contributors_on_project_id_and_user_id"
+  add_index "contributors", ["user_id"], name: "index_contributors_on_user_id"
 
   create_table "labels", force: :cascade do |t|
     t.string   "name"
@@ -40,14 +48,6 @@ ActiveRecord::Schema.define(version: 20160130164504) do
 
   add_index "projects", ["author_id"], name: "index_projects_on_author_id"
   add_index "projects", ["category_id"], name: "index_projects_on_category_id"
-
-  create_table "projects_users", id: false, force: :cascade do |t|
-    t.integer "project_id"
-    t.integer "user_id"
-  end
-
-  add_index "projects_users", ["project_id", "user_id"], name: "index_projects_users_on_project_id_and_user_id"
-  add_index "projects_users", ["user_id"], name: "index_projects_users_on_user_id"
 
   create_table "roles", force: :cascade do |t|
     t.string   "name"

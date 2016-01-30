@@ -7,4 +7,6 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   has_many :categories
   has_many :projects, foreign_key: :author_id
+  has_many :contributors
+  has_many :tasks, through: :contributors, source: :project
 end

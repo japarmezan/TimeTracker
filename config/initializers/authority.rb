@@ -43,7 +43,7 @@ Authority.configure do |config|
      :read   => 'readable',
      :update => 'updatable',
      :delete => 'deletable'
-  # }
+   }
 
   # LOGGER
   # ======

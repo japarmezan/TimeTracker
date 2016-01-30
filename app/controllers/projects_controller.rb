@@ -6,7 +6,7 @@ class ProjectsController < ApplicationController
   # GET /projects
   # GET /projects.json
   def index
-    @projects = Project.all
+    @projects = Project.all#current_user.projects
   end
 
   # GET /projects/1
@@ -55,6 +55,7 @@ class ProjectsController < ApplicationController
 
     respond_to do |format|
       if @project.save
+        current_user.projects << @project
         format.html { redirect_to @project, notice: 'Project was successfully created.' }
         format.json { render :show, status: :created, location: @project }
       else

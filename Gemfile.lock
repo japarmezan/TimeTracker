@@ -38,6 +38,9 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.4.0)
     arel (6.0.3)
+    authority (3.1.0)
+      activesupport (>= 3.0.0)
+      rake (>= 0.8.7)
     autoprefixer-rails (6.3.1)
       execjs
       json
@@ -196,6 +199,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  authority
   better_errors
   bootstrap-sass
   byebug

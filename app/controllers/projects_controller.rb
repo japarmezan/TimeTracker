@@ -127,7 +127,7 @@ class ProjectsController < ApplicationController
     def add_new_contributors
       contributors = contributor_params
       contributors.each do |c|
-        if @project.coworkers.where(:email => c).length == 0
+        if @project.coworkers.where(:email => c).length == 0 and c != @project.author.email
           @project.coworkers << User.where(:email => c)
         end
       end

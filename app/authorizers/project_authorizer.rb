@@ -1,4 +1,3 @@
-# Other authorizers should subclass this one
 class ProjectAuthorizer < ApplicationAuthorizer
 
   # Any class method from Authority::Authorizer that isn't overridden
@@ -18,7 +17,7 @@ class ProjectAuthorizer < ApplicationAuthorizer
   end
 
   def self.updatable_by?(user)
-    user != nil
+    not user.nil?
   end
 
   def readable_by?(user)
@@ -30,11 +29,11 @@ class ProjectAuthorizer < ApplicationAuthorizer
   end
 
   def creatable_by?(user)
-    true
+    not user.nil?
   end
 
   def self.creatable_by?(user)
-    true
+    not user.nil?
   end
 
 end

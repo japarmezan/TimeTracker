@@ -55,12 +55,14 @@ class ProjectsController < ApplicationController
   def create
     @project = current_user.projects.new(project_params)
     authorize_action_for @project
+    @project.category_id = category_params
     respond_to do |format|
       if @project.save
         manage_contributors
         format.html { redirect_to @project, notice: 'Project was successfully created.' }
         format.json { render :show, status: :created, location: @project }
       else
+        @categories = Category.where(user_id: nil) + current_user.categories
         format.html { render :new }
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end
@@ -74,12 +76,14 @@ class ProjectsController < ApplicationController
   # PATCH/PUT /projects/1.json
   def update
     authorize_action_for @project
+    @project.category_id = category_params
     respond_to do |format|
       if @project.update(project_params)
         manage_contributors
         format.html { redirect_to @project, notice: 'Project was successfully updated.' }
         format.json { render :show, status: :ok, location: @project }
       else
+        @categories = Category.where(user_id: nil) + current_user.categories
         format.html { render :edit }
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end
@@ -117,6 +121,10 @@ class ProjectsController < ApplicationController
 
     def contributor_params
       params[:project][:contributors].tr(',', ' ').split
+    end
+
+    def category_params
+      params[:project][:category_id]
     end
 
     def manage_contributors

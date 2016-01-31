@@ -7,4 +7,8 @@ class Project < ActiveRecord::Base
       has_many :contributors
       has_many :coworkers, through: :contributors, source: :user
       self.authorizer_name = 'ProjectAuthorizer'
+
+      validates :name, presence: true
+      validates :description, presence: true
+      validates :category_id, presence: true
 end

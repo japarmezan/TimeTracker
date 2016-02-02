@@ -11,4 +11,26 @@ class Project < ActiveRecord::Base
       validates :name, presence: true
       validates :description, presence: true
       validates :category_id, presence: true
+
+      def set_contributors(emails)
+        add_new_contributors(emails)
+        remove_redundant_contributors(emails)
+      end
+
+      private
+      def add_new_contributors(emails)
+        emails.each do |e|
+            if coworkers.where(:email => e).length == 0 and e != author.email
+              coworkers << User.where(:email => e)
+            end
+          end
+      end
+
+      def remove_redundant_contributors(emails)
+          coworkers.each do |c|
+            unless emails.include?(c.email)
+              coworkers.delete(c)
+            end
+          end
+      end
 end

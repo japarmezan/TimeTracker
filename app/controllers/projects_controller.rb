@@ -58,7 +58,7 @@ class ProjectsController < ApplicationController
     @project.category_id = category_params
     respond_to do |format|
       if @project.save
-        manage_contributors
+        @project.set_contributors(contributor_params)
         format.html { redirect_to @project, notice: 'Project was successfully created.' }
         format.json { render :show, status: :created, location: @project }
       else
@@ -79,7 +79,7 @@ class ProjectsController < ApplicationController
     @project.category_id = category_params
     respond_to do |format|
       if @project.update(project_params)
-        manage_contributors
+        @project.set_contributors(contributor_params)
         format.html { redirect_to @project, notice: 'Project was successfully updated.' }
         format.json { render :show, status: :ok, location: @project }
       else
@@ -125,28 +125,5 @@ class ProjectsController < ApplicationController
 
     def category_params
       params[:project][:category_id]
-    end
-
-    def manage_contributors
-      add_new_contributors
-      remove_redundant_contributors
-    end
-
-    def add_new_contributors
-      contributors = contributor_params
-      contributors.each do |c|
-        if @project.coworkers.where(:email => c).length == 0 and c != @project.author.email
-          @project.coworkers << User.where(:email => c)
-        end
-      end
-    end
-
-    def remove_redundant_contributors
-      contributors = contributor_params
-      @project.coworkers.each do |c|
-        unless contributors.include?(c.email)
-          @project.coworkers.delete(c)
-        end
-      end
     end
 end

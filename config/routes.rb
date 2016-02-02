@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   delete 'tracks/:id' => 'projects#delete_track'
 
   resources :tracks
+  resources :charts
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase

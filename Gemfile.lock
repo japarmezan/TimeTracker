@@ -82,6 +82,7 @@ GEM
     execjs (2.6.0)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
+    hash-deep-merge (0.1.1)
     hashids (1.0.2)
     i18n (0.7.0)
     jbuilder (2.4.0)
@@ -94,6 +95,9 @@ GEM
     json (1.8.3)
     launchy (2.4.3)
       addressable (~> 2.3)
+    lazy_high_charts (1.5.4)
+      bundler (>= 1.0)
+      hash-deep-merge
     letter_opener (1.4.1)
       launchy (~> 2.2)
     loofah (2.0.3)
@@ -209,6 +213,7 @@ DEPENDENCIES
   hashids
   jbuilder (~> 2.0)
   jquery-rails
+  lazy_high_charts
   letter_opener
   paperclip (~> 4.3)
   pry

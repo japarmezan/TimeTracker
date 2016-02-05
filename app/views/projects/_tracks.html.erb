@@ -4,6 +4,7 @@
     <table class="table table-condensed table-hover">
       <thead>
         <tr>
+          <th>By</th>
           <th>From</th>
           <th>To</th>
           <th>Length</th>
@@ -15,6 +16,7 @@
       <tbody>
         <% @tracks.each do |track| %>
           <tr>
+            <td><%= track.user.email if track.user %></td>
             <td class="no-underline"><%= track.start %></td>
             <td><%= track.end %></td>
             <td><%= distance_of_time_in_words(track.start, track.end) if track.end %></td>

@@ -20,6 +20,7 @@ class ProjectsController < ApplicationController
     @track = Track.new
     @track.start = DateTime.now
     if @track.save
+      current_user.tracks << @track
       @project.tracks << @track
       redirect_to @project, notice: 'Work on project started.'
     else

@@ -15,7 +15,7 @@ class ChartsController < ApplicationController
       hours << h
     end
     @chart = LazyHighCharts::HighChart.new('graph') do |f|
-      f.title(text: "Hours spent on pojects")
+      f.title(text: "Hours spent on your pojects")
       f.xAxis(categories: names)
       f.series(name: "Spent hours", yAxis: 0, data: hours)
 

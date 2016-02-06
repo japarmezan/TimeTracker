@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160205100511) do
+ActiveRecord::Schema.define(version: 20160206101840) do
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
@@ -33,9 +33,13 @@ ActiveRecord::Schema.define(version: 20160205100511) do
 
   create_table "labels", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.integer  "project_id"
+    t.decimal  "wage",       precision: 8, scale: 2
   end
+
+  add_index "labels", ["project_id"], name: "index_labels_on_project_id"
 
   create_table "projects", force: :cascade do |t|
     t.string   "name"

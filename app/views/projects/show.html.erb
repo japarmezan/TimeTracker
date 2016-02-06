@@ -24,6 +24,8 @@
 	<%= button_to 'Stop', { action: "stop", id: @project }, { :class=>"btn btn-danger btn-lg margin-bottom" } %>
 	<% end %>
 
+      <%= high_chart("some_id", chart_for_project(@project)) unless current_user.nil? %>
+
 	</br>
 
 

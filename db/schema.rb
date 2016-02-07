@@ -11,11 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 20160204211254) do
-=======
 ActiveRecord::Schema.define(version: 20160206101840) do
->>>>>>> 17d1878885c304d052a108cffb4fb771ed94c3e0
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
@@ -77,10 +73,7 @@ ActiveRecord::Schema.define(version: 20160206101840) do
     t.integer  "project_id"
     t.integer  "label_id"
     t.integer  "user_id"
-<<<<<<< HEAD
     t.string   "status"
-=======
->>>>>>> 17d1878885c304d052a108cffb4fb771ed94c3e0
   end
 
   add_index "tracks", ["label_id"], name: "index_tracks_on_label_id"

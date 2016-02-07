@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing labels for project</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Price per 1 hour</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @labels.each do |label| %>
+      <tr>
+        <td><%= label.name %></td>
+        <td><%= label.wage %></td>
+        <td><%= link_to 'Edit', edit_label_path(label) %></td>
+        <td><%= link_to 'Destroy', label, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New label', new_project_label_path, :class => "btn btn-primary margin-bottom" %> </br></br>
+<%= link_to 'Back to project', project_path(@project) %>

@@ -57,6 +57,8 @@
   		<p class="lead">Job finished!</p>
 	<% end %>
 
+      <%= high_chart("some_id", chart_for_project(@project)) unless current_user.nil? %>
+
 	</br>
 
 

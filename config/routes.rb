@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   post 'projects/:project_id/tracks', to: 'tracks#create'
   patch 'projects/:project_idtracks/:id', to: 'tracks#update'
 
+<<<<<<< HEAD
   delete 'tracks/:id' => 'tracks#destroy'
 
   resources :projects do
@@ -25,6 +26,11 @@ Rails.application.routes.draw do
   end
 
   resources :tracks, only: [:start, :stop, :pause, :destroy]
+=======
+  resources :tracks
+  resources :charts
+  resources :labels
+>>>>>>> 17d1878885c304d052a108cffb4fb771ed94c3e0
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase

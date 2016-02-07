@@ -31,6 +31,7 @@ gem 'paperclip', '~> 4.3'
 gem 'bootstrap-sass'
 gem 'hashids'
 gem 'authority'
+gem 'lazy_high_charts'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

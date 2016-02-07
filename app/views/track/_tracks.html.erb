@@ -1,0 +1,52 @@
+
+<div class="panel panel-default">
+  <div class="panel-body">
+    <h2>Tracks:</h2>
+    <table class="table table-condensed table-hover">
+      <thead>
+        <tr>
+          <th>User</th>
+          <th>From</th>
+          <th>To</th>
+          <th>Length</th>
+          <th>Comment</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @tracks.each do |track| %>
+          <tr class="<%= 'active' if track.user_id == current_user.id && @project.contributors.size > 0 %>
+            <%= 'warning' if track.user_id == current_user.id && track.status == 'paused' %>
+            <%= 'success' if track.user_id == current_user.id && track.status == 'started' || track.status == 'resumed' %>
+            <%= 'danger' if track.user_id == current_user.id && track.status == 'stopped'%>">
+            <td class="text-overflow"><%= User.find(track.user_id).email %></td>
+            <td><%= track.start.in_time_zone("Prague").strftime("%H:%M, %d.%m.%Y") if track.start %></td>
+            <td><%= track.end.in_time_zone("Prague").strftime("%H:%M, %d.%m.%Y") if track.end %></td>
+            <td>
+                <%= distance_of_time_in_words(track.start, track.end) if track.end %>   
+            </td>
+            <td class="text-overflow">
+              <% if track.status == 'started' %>
+                <b class="text-success">In progress...</b>
+              <% end %>              
+              <% if track.status == 'paused' %>              
+                <b class="text-warning">Paused</b>
+              <% end %>
+              <% if track.status == 'resumed' %>              
+                <b class="text-success">Resumed...</b>
+              <% end %>
+              <% if track.status == 'stopped' %>              
+                <b class="">Fill in comment...</b>
+              <% end %>
+              <% if track.status == 'uploaded' %>
+                <%= track.comment %>         
+              <% end %>
+            </td>
+            <td><%= link_to '<span class="glyphicon glyphicon-trash lead" aria-hidden="true"></span>'.html_safe, { :controller => 'tracks', action: 'destroy', :id => track.id, :project => @project }, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>, 
+      </tbody>
+    </table>
+  </div>
+</div>

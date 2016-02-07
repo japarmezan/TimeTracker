@@ -11,11 +11,20 @@ Rails.application.routes.draw do
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
-  post 'projects/:id/start' => 'projects#start'
-  post 'projects/:id/stop' => 'projects#stop'
-  delete 'tracks/:id' => 'projects#delete_track'
+  post 'projects/:id/start', to: 'tracks#start'
+  post 'projects/:id/stop', to: 'tracks#stop'
+  post 'projects/:id/pause', to: 'tracks#pause'
+  post 'projects/:id/resume', to: 'tracks#resume'
+  post 'projects/:project_id/tracks', to: 'tracks#create'
+  patch 'projects/:project_idtracks/:id', to: 'tracks#update'
 
-  resources :tracks
+  delete 'tracks/:id' => 'tracks#destroy'
+
+  resources :projects do
+    resources :tracks, only: [:update, :create]
+  end
+
+  resources :tracks, only: [:start, :stop, :pause, :destroy]
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase

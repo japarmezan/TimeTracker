@@ -11,28 +11,61 @@
 	  <%= @project.name %>
 	</h1>
 
-	<p class="margin-bottom" >
-	  <%= @project.description %>
-	</p>
+	<dl class="dl-horizontal">
+		<dt> About project: </dt>
+	  	<dd><%= @project.description %></dd>
 
-      <h5>Contributors:</h5>
-      <p><%= @project.coworkers.map {|t| t.email}.join(', ') %></p>
+		<dt> Contributors: </dt>
+		<% if @project.coworkers.size == 0 %>
+			<dd>You are here all alone. Enjoy your work.</dd>
+		<% else %>
+	  		<dd><%= @project.coworkers.map {|t| t.email}.join(', ') %></dd>
+	  	<% end %>
 
-	<% if !@track || @track.end %>
-	<%= button_to 'Start', { action: "start", id: @project }, { :class=>"btn btn-success btn-lg margin-bottom" } %>
-	<% else %>
-	<%= button_to 'Stop', { action: "stop", id: @project }, { :class=>"btn btn-danger btn-lg margin-bottom" } %>
+  		<dt> Total work time:  </dt>
+	  	<dd><%= distance_of_time_in_words(@work_time) %></dd>
+
+ </div>
+</div>
+
+
+<div class="panel panel-default">
+  <div class="panel-body">
+
+	<% if @track.status == nil %>	
+  		<p class="lead">Start measuring your project time:</p>
+		<%= button_to 'Start', { controller: "tracks", action: "start", id: @project }, :class => "btn-xlg btn btn-success margin-bottom"  %>
+	<% end %>
+
+	<% if @track.status == 'started' || @track.status == 'resumed' %>
+  		<p class="lead">Timer running. Work, yo man!</p>
+		<%= button_to 'Pause', { controller: "tracks", action: "pause", id: @project }, { :class=>"btn-xlg btn btn-warning margin-bottom" } %>
+	<% end %>
+
+	<% if @track.status == 'paused' %>
+  		<p class="lead">Timer paused. Feel free to continue at any time:</p>
+		<%= button_to 'Resume', { controller: "tracks", action: "resume", id: @project }, { :class=>"btn-xlg btn btn-success margin-bottom" } %>
+	<% end %>
+
+	<% if @track.status == 'started' || @track.status == 'paused' || @track.status == 'resumed' %>	
+		<%= button_to 'Stop', { controller: "tracks", action: "stop", id: @project }, { :class=>"btn-xlg btn btn-danger margin-bottom" } %>
+	<% end %>
+
+	</br>
+
+	<% if @track.status == 'stopped' %>				
+  		<p class="lead">Job finished!</p>
 	<% end %>
 
 	</br>
 
 
- </div>
+	<%= render 'track/form' %>
+  </div>
 </div>
 
-<%#= render 'track_form' %>
 
-<%= render 'tracks' %>
+<%= render 'track/tracks' %>
 
 
 <%= link_to 'Edit', edit_project_path(@project) %> |

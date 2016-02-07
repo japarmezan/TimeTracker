@@ -34,6 +34,14 @@ $table-border-color: $light-brown;
 $panel-bg: #f6f6f6;
 $panel-border-radius: 0px;
 $panel-body-padding: 20px;
+$border-radius-base: 0px;
+$border-radius-large: 0px;
+$border-radius-small: 0px;
+$btn-default-border: transparent;
+$btn-success-border: transparent;
+$btn-warning-border: transparent;
+$btn-danger-border: transparent;
+$btn-primary-border: transparent;
 
 .margin-top {
 	margin-top: 2em;
@@ -41,6 +49,23 @@ $panel-body-padding: 20px;
 
 .margin-bottom {
 	margin-bottom: 2em;
+}
+
+.margin-right {
+	margin-right: 2em;
+}
+
+.btn-xlg {
+	padding: 0.5em 1em 0.5em 1em  !important;
+	font-size: 2em !important;
+	font-family: $headings-font-family;
+	margin: 0.5em;	
+}
+
+form.button_to
+{
+	display: inline-block !important;
+	width: 12em;	
 }
 
 @import "bootstrap-sprockets";

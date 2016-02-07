@@ -1,0 +1,85 @@
+<div class="form-inline">
+
+  <% if @track.status == 'uploaded' || !@track.status %>
+    <p class="lead">Or add your time track directly: </p>
+  <% end %>
+  <% if @track.status == 'started' %>
+    <p class="lead">Here's your progress: </p>
+  <% end %>
+  <% if @track.status == 'paused' %>
+    <p class="lead">Take a break... </p>
+  <% end %>
+  <% if @track.status == 'stopped' %>
+    <p class="lead">Now fill in label and comment for this track:</p>
+  <% end %>
+
+
+  <%= form_for ([@project, @track]) do |f| %>
+    <% if @track.errors.any? %>
+      <div id="error_explanation">
+        <% @project.errors.full_messages.each do |message| %>
+          <p><%= message %></p>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="row">
+      <div class="col-md-7">
+        <div class="field form-group">
+          <%= f.label :start, :class =>"margin-right" %>
+          <% if (@track.status == 'started' || @track.status == 'paused' || @track.status == 'stopped' || @track.status == 'resumed' ) && @track.start %>
+            <p class="form-control-static"><%= @track.start.in_time_zone("Prague").strftime("%H:%M, %d.%m.%Y") %></p>
+          <% else %>
+            <%= f.datetime_select :start, { order: [:day, :month, :year], :use_month_numbers => true }, :class=>"form-control" %>
+          <% end %>
+        </div>
+
+        </br>
+        </br>
+        <div class="field form-group">
+          <%= f.label :end, :class =>"margin-right" %>          
+          <% if @track.status == 'paused'%>
+            <p class="form-control-static margin-right text-warning">Paused...</p>
+          <% end %>            
+          <% if @track.status == 'stopped' && @track.end %>
+            <p class="form-control-static margin-right"><%= @track.end.in_time_zone("Prague").strftime("%H:%M, %d.%m.%Y") %></p>
+          <% end %>
+          <% if @track.status == nil  %>  
+            <%= f.datetime_select :end, { order: [:day, :month, :year], :use_month_numbers => true }, :class=>"form-control" %>
+          <% end %>
+        </div>
+        </br>
+      </div>
+      
+      <div class="col-md-3">
+        <div class="field form-group">
+          <%= f.label :comment %>
+          <%= f.text_area :comment, :class=>"form-control", :disabled => @track && (@track.status != nil && @track.status != 'stopped') %>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="field form-group">
+          <%= f.label :label %>
+          </br>
+          <%= f.select :label, options_for_select([1, 2, 3]), {}, { :class => 'form-control', :disabled => @track && (@track.status != nil && @track.status != 'stopped') } %>
+        </div>
+      </div>
+
+    </div>
+
+
+    <% if @track.status == 'stopped' %>
+      <div class="actions form-group margin-top">
+        <%= f.submit 'Upload info', :class=>"btn btn-lg btn-success", :project => @project%>
+      </div>
+    <% end %>
+
+    <% if @track.status == nil %>
+      <div class="actions form-group margin-top">
+        <%= f.submit 'Add new time track', :class=>"btn btn-primary" %>
+      </div>
+    <% end %>          
+
+  <% end %>
+</div>

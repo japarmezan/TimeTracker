@@ -1,9 +1,12 @@
 class LabelsController < ApplicationController
-    before_action :set_category, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
+  before_action :set_label, only: [:show, :edit, :update, :destroy]
+  before_action :set_project, only: [:index, :new, :create]
 
   # GET /categories
   # GET /categories.json
-  def index
+  def index    
+    @labels = @project.labels
   end
 
   # GET /categories/1
@@ -13,10 +16,7 @@ class LabelsController < ApplicationController
 
   # GET /categories/new
   def new
-    @label = Label.new
-
-    # just to know, if it came from projects page
-    @@from_project = params[:from_project]
+    @label = @project.labels.build
   end
 
   # GET /categories/1/edit
@@ -26,12 +26,10 @@ class LabelsController < ApplicationController
   # POST /categories
   # POST /categories.json
   def create
-    @label = Label.new(label_params)
-    project_id = Project.decode_id(@@from_project)
-    @label.project_id = project_id
+    @label = @project.labels.build(label_params)
     respond_to do |format|
       if @label.save
-        format.html { redirect_to edit_project_path(@@from_project), notice: 'Label was successfully created.' }
+        format.html { redirect_to project_labels_path(@project), notice: 'Label was successfully created.' }
       else
         format.html { render :new }
       end
@@ -40,10 +38,11 @@ class LabelsController < ApplicationController
 
   # PATCH/PUT /categories/1
   # PATCH/PUT /categories/1.json
-  def update
+  def update    
+    @project = Project.find(@label.project_id)
     respond_to do |format|
       if @label.update(label_params)
-        format.html { redirect_to @label, notice: 'Label was successfully updated.' }
+        format.html { redirect_to project_labels_path(@project), notice: 'Label was successfully updated.' }
         format.json { render :show, status: :ok, location: @label }
       else
         format.html { render :edit }
@@ -57,15 +56,19 @@ class LabelsController < ApplicationController
   def destroy
     @label.destroy
     respond_to do |format|
-      format.html { redirect_to categories_url, notice: 'Label was successfully destroyed.' }
+      format.html { redirect_to :back, notice: 'Label was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_category
+    def set_label
       @label = Label.find Label.decode_id(params[:id])
+    end
+
+    def set_project
+      @project = Project.find Project.decode_id(params[:project_id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

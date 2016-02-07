@@ -2,8 +2,4 @@
 
 <%= render 'form' %>
 
-<% if @from_project %>
-	<%= link_to 'Back', new_project_path %>
-<% else %>	
-	<%= link_to 'Back', categories_path %>
-<% end %>
+<%= link_to 'Back', :back %>

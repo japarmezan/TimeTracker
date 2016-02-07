@@ -35,7 +35,7 @@ class TracksController < ApplicationController
       redirect_to @project unless @track.status == 'started' || @track.status == 'paused' || @track.status == 'resumed'
     end
 
-    if @track.status == 'resumed'
+    if @track.status == 'resumed' || @track.status == 'started' 
       unless @track.update(:end => DateTime.now, :status => 'stopped')
         redirect_to @project, alert: 'Could not stop work on project.'
       end

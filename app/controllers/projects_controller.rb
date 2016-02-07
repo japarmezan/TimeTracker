@@ -9,12 +9,15 @@ class ProjectsController < ApplicationController
   def index
   end
 
+  def index_collaborate
+  end
+
   # GET /projects/1
   # GET /projects/1.json
   def show
     @tracks = @project.tracks.order(created_at: :desc)
 
-    @track = @tracks.where(user_id: current_user.id).first
+    @track = @tracks.where(user_id: current_user.id).first if user_signed_in?
     @track = @project.tracks.build if @track == nil || @track.status == 'uploaded'
 
     @work_time = 0
@@ -25,8 +28,8 @@ class ProjectsController < ApplicationController
 
   # GET /projects/new
   def new
-    @project = current_user.projects.new
     authorize_action_for @project
+    @project = current_user.projects.new
     @categories = Category.where(user_id: nil) + current_user.categories
   end
 

@@ -1,5 +1,6 @@
 require 'byebug'
 class CategoriesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_category, only: [:show, :edit, :update, :destroy]
 
   # GET /categories
@@ -16,9 +17,6 @@ class CategoriesController < ApplicationController
   # GET /categories/new
   def new
     @category = Category.new
-
-    # just to know, if it came from projects page
-    @@from_project = params[:from_project]
   end
 
   # GET /categories/1/edit
@@ -33,11 +31,8 @@ class CategoriesController < ApplicationController
     respond_to do |format|
       if @category.save
         current_user.categories << @category
-        if @@from_project
-          format.html { redirect_to new_project_path, notice: 'Category was successfully created.' }
-        else         
-          format.html { redirect_to @category, notice: 'Category was successfully created.' }
-        end
+        format.html { redirect_to categories_path, notice: 'Category was successfully created.' }
+        
         format.json { render :show, status: :created, location: @category }
       else
         format.html { render :new }
@@ -51,7 +46,7 @@ class CategoriesController < ApplicationController
   def update
     respond_to do |format|
       if @category.update(category_params)
-        format.html { redirect_to @category, notice: 'Category was successfully updated.' }
+        format.html { redirect_to categories_path, notice: 'Category was successfully updated.' }
         format.json { render :show, status: :ok, location: @category }
       else
         format.html { render :edit }
@@ -63,6 +58,11 @@ class CategoriesController < ApplicationController
   # DELETE /categories/1
   # DELETE /categories/1.json
   def destroy
+    if @category.projects.size > 0 
+      redirect_to categories_path, notice: 'Cannot delete category with projects in it.'
+      return
+    end
+
     @category.destroy
     respond_to do |format|
       format.html { redirect_to categories_url, notice: 'Category was successfully destroyed.' }
@@ -73,11 +73,11 @@ class CategoriesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_category
-      @category = Category.find(params[:id])
+      @category = Category.find Category.decode_id(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def category_params
-      params.require(:category).permit(:name, :color, :from_project)
+      params.require(:category).permit(:name, :color)
     end
 end

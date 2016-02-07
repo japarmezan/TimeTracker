@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
+
+  get 'projects_collaborate', to: 'projects#index_collaborate'
   post 'projects/:id/start', to: 'tracks#start'
   post 'projects/:id/stop', to: 'tracks#stop'
   post 'projects/:id/pause', to: 'tracks#pause'
@@ -22,10 +24,10 @@ Rails.application.routes.draw do
 
   resources :projects do
     resources :tracks, only: [:update, :create]
+    resources :labels, shallow: true
   end
   resources :tracks, only: [:start, :stop, :pause, :resume, :destroy]
   resources :charts
-  resources :labels
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase

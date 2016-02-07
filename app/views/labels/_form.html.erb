@@ -1,22 +1,13 @@
-<%= form_for(@label) do |f| %>
-  <% if @label.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@label.errors.count, "error") %> prohibited this label from being saved:</h2>
-
-      <ul>
-      <% @label.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+<%= form_for([@project, @label]) do |f| %>
+  
+  <%= print_errors(@label) %>
 
   <div class="field form-group">
     <%= f.label :name %><br>
     <%= f.text_field :name, :class=>"form-control" %>
   </div>
   <div class="field form-group">
-    <%= f.label :wage %><br>
+    <%= f.label "Price per hour" %><br>
     <%= f.text_field :wage, :class=>"form-control" %>
   </div>
   <div class="actions form-group">

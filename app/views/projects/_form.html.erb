@@ -1,15 +1,5 @@
 <%= form_for(@project) do |f| %>
-  <% if @project.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@project.errors.count, "error") %> prohibited this project from being saved:</h2>
-
-      <ul>
-      <% @project.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= print_errors(@project) %>
 
   <div class="field form-group">
     <%= f.label :name %>
@@ -22,21 +12,19 @@
 
   <div class="field form-group">
     <%= f.label :category %>    
-    <%= f.collection_select :category_id, @categories, :id, :name, {:include_blank => true}, { :class=>"form-control" } %>
+    <%= f.collection_select :category_id, @categories, :id, :name, {}, { :class=>"form-control" } %>
   </div>
+  <%= link_to '+ Add new category', new_category_path %>
+  <p id="notice" class="text-success"><%= notice %></p>
 
 
   <div class="field form-group">
     <%= f.label :contributors %>    
-    <%= f.text_area :contributors,  :value => @project.coworkers.map {|t| t.email}.join(', '), :class=>"form-control" %>
+    <%= f.text_area :contributors, :value => @project.coworkers.map {|t| t.email}.join(', '), :class=>"form-control" %>
   </div>
 
-  <%= link_to '+ Add new category', new_category_path(:from_project => true)  %>
   <br />
-  <%= link_to '+ Add new label', new_label_path(:from_project => Project.encode_id(@project.id))  %>
-  <p id="notice" class="text-success"><%= notice %></p>
   <div class="actions form-group">
-
     <%= f.submit 'Create Project', :class=>"btn btn-primary", :style => "margin-top: 2em;" %>
   </div>
 <% end %>

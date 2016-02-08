@@ -2,7 +2,7 @@ require 'byebug'
 class ProjectsController < ApplicationController
   before_action :authenticate_user!, except: [:show]
   before_action :set_project, only: [:show, :edit, :update, :destroy, :start, :stop]
-  authorize_actions_for Project, except: [:show,], :actions => {:destroy => :update, :start => :read, :stop => :read}
+  authorize_actions_for Project, except: [:show,], :actions => {:destroy => :update, :start => :read, :stop => :read, :index_collaborate => :read}
  
   # GET /projects
   # GET /projects.json

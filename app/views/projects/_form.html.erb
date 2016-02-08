@@ -14,6 +14,10 @@
     <%= f.label :category %>    
     <%= f.collection_select :category_id, @categories, :id, :name, {}, { :class=>"form-control" } %>
   </div>
+  <div class="field form-group">
+    <%= f.label :client %>
+    <%= f.text_area :client, :class=>"form-control" %>
+  </div>
   <%= link_to '+ Add new category', new_category_path %>
   <p id="notice" class="text-success"><%= notice %></p>
 

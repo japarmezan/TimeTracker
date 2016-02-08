@@ -11,6 +11,7 @@ class Project < ActiveRecord::Base
 
   validates :name, presence: true
   validates :description, presence: true
+  validates :client, presence: true
   validates :category_id, presence: true
 
   def set_contributors(emails)

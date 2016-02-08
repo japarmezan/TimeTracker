@@ -68,5 +68,10 @@ form.button_to
 	width: 12em;	
 }
 
+.pre-wrap
+{
+  white-space: pre-wrap;
+}
+
 @import "bootstrap-sprockets";
 @import "bootstrap";

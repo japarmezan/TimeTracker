@@ -28,6 +28,9 @@
 	  		<dd><%= @project.coworkers.map {|t| t.email}.join(', ') %></dd>
 	  	<% end %>
 
+		<dt> Client</dt>
+	  	<dd class ="pre-wrap"><%= @project.client %></dd>
+
   		<dt> Total work time </dt>
 	  	<dd><%= distance_of_time_in_words(@work_time) %></dd>
 

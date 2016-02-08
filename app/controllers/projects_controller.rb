@@ -28,8 +28,8 @@ class ProjectsController < ApplicationController
 
   # GET /projects/new
   def new
-    authorize_action_for @project
     @project = current_user.projects.new
+    authorize_action_for @project
     @categories = Category.where(user_id: nil) + current_user.categories
   end
 
@@ -95,7 +95,7 @@ class ProjectsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
-      params.require(:project).permit(:name, :description)
+      params.require(:project).permit(:name, :description, :client)
     end
 
     def contributor_params

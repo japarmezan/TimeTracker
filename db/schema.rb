@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160206101840) do
+ActiveRecord::Schema.define(version: 20160208165459) do
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 20160206101840) do
     t.datetime "updated_at",  null: false
     t.integer  "category_id"
     t.integer  "author_id"
+    t.string   "client"
   end
 
   add_index "projects", ["author_id"], name: "index_projects_on_author_id"

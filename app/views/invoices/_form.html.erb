@@ -1,0 +1,23 @@
+<%= form_for(@invoice) do |f| %>
+  <%= print_errors(@invoice) %>
+
+    <div class="col-md-3">
+
+      <div class="field form-group">
+        <%= f.label :from, :class =>"margin-right" %>
+        <%= f.datetime_select :from, { order: [:day, :month, :year], :use_month_numbers => true }, :class=>"form-control" %>
+      </div>
+
+      </br>
+
+      <div class="field form-group">
+        <%= f.label :to, :class =>"margin-right" %>
+        <%= f.datetime_select :to, { order: [:day, :month, :year], :use_month_numbers => true }, :class=>"form-control" %>
+      </div>
+      </br>
+      <%= f.hidden_field :project_id, :value => Project.find(Project.decode_id(params[:id])).id %>
+      <div class="actions form-group">
+        <%= f.submit 'Create invoice', :class=>"btn btn-primary" %>
+      </div>
+    </div>
+<% end %>

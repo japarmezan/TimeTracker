@@ -41,6 +41,8 @@
 
     <%= link_to '<span class="glyphicon glyphicon-euro" aria-hidden="true"></span> Manage labels'.html_safe, project_labels_path(@project), :class => "btn btn-primary" if user_signed_in? %>
 
+    <%= link_to '<span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"></span> Invoice'.html_safe, invoice_project_path(@project), :class => "btn btn-primary" if user_signed_in? and @project.author == current_user%>
+
  </div>
 </div>
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160208165459) do
+ActiveRecord::Schema.define(version: 20160210211405) do
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
@@ -30,6 +30,14 @@ ActiveRecord::Schema.define(version: 20160208165459) do
 
   add_index "contributors", ["project_id", "user_id"], name: "index_contributors_on_project_id_and_user_id"
   add_index "contributors", ["user_id"], name: "index_contributors_on_user_id"
+
+  create_table "invoices", force: :cascade do |t|
+    t.datetime "from"
+    t.datetime "to"
+    t.integer  "project_id"
+  end
+
+  add_index "invoices", ["project_id"], name: "index_invoices_on_project_id"
 
   create_table "labels", force: :cascade do |t|
     t.string   "name"
@@ -73,8 +81,8 @@ ActiveRecord::Schema.define(version: 20160208165459) do
     t.datetime "updated_at", null: false
     t.integer  "project_id"
     t.integer  "label_id"
-    t.integer  "user_id"
     t.string   "status"
+    t.integer  "user_id"
   end
 
   add_index "tracks", ["label_id"], name: "index_tracks_on_label_id"

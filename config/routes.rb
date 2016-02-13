@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :invoices
   resources :categories
   resources :projects
   devise_for :users
@@ -13,6 +14,7 @@ Rails.application.routes.draw do
 
 
   get 'projects_collaborate', to: 'projects#index_collaborate'
+  get 'projects/:id/invoice', to: 'invoices#invoice_project', as: 'invoice_project'
   post 'projects/:id/start', to: 'tracks#start'
   post 'projects/:id/stop', to: 'tracks#stop'
   post 'projects/:id/pause', to: 'tracks#pause'

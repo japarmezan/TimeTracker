@@ -1,5 +1,5 @@
 class InvoicesController < ApplicationController
-#  before_action :set_project, only: [:invoice_project, :create]
+  before_action :set_invoice, only: [:destroy]
 
   # GET /invoices
   # GET /invoices.json
@@ -61,7 +61,7 @@ class InvoicesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_invoice
-      @invoice = Invoice.find(params[:id])
+      @invoice = Invoice.find Invoice.decode_id(params[:id])
     end
 
     def set_project

@@ -1,0 +1,30 @@
+<div class="panel panel-default">
+  <div class="panel-body">
+    <h1>Your invoices:</h1>
+
+    
+    <table class="table table-condensed table-hover">
+      <thead>
+        <tr>
+          <th>Project name</th>
+          <th>Invoiced price</th>
+          <th>Invoice from</th>
+          <th >Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% current_user.projects.each do |project| %>
+          <% project.invoices.each do |invoice| %>
+            <tr>
+              <td class="h3 no-underline"><%= link_to project.name, project %></td>
+              <td>N/A</td>
+              <td><%= invoice.created_at %></td>
+              <td><%= link_to '<span class="glyphicon glyphicon-trash lead" aria-hidden="true"></span>'.html_safe, invoice, method: :delete, data: { confirm: 'Are you sure?' } if project.updatable_by?(current_user) %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

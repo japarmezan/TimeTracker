@@ -32,6 +32,8 @@ gem 'bootstrap-sass'
 gem 'hashids'
 gem 'authority'
 gem 'lazy_high_charts'
+gem 'prawn'
+gem 'prawn-table'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

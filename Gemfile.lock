@@ -119,6 +119,11 @@ GEM
       cocaine (~> 0.5.5)
       mime-types
       mimemagic (= 0.3.0)
+    pdf-core (0.2.5)
+    prawn (1.2.1)
+      pdf-core (~> 0.2.5)
+      ttfunk (~> 1.2.0)
+    prawn-table (0.1.2)
     pry (0.10.3)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -184,6 +189,7 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (2.0.2)
+    ttfunk (1.2.2)
     turbolinks (2.5.3)
       coffee-rails
     tzinfo (1.2.2)
@@ -216,6 +222,8 @@ DEPENDENCIES
   lazy_high_charts
   letter_opener
   paperclip (~> 4.3)
+  prawn
+  prawn-table
   pry
   rails (= 4.2.5)
   rails_12factor

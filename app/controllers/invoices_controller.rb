@@ -1,5 +1,6 @@
 class InvoicesController < ApplicationController
-  before_action :set_invoice, only: [:destroy]
+  include InvoicesHelper
+  before_action :set_invoice, only: [:destroy, :download]
 
   # GET /invoices
   # GET /invoices.json
@@ -19,6 +20,10 @@ class InvoicesController < ApplicationController
 
   # GET /invoices/1/edit
   def edit
+  end
+
+  def download
+    send_data render_invoice(@invoice), filename: 'invoice.pdf', type: 'application/pdf'
   end
 
   # POST /invoices

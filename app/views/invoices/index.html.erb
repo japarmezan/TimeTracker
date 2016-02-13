@@ -10,7 +10,7 @@
           <th>Invoiced price</th>
           <th>Invoice from</th>
           <th>Invoice to</th>
-          <th >Actions</th>
+          <th colspan="2">Actions</th>
         </tr>
       </thead>
 
@@ -22,6 +22,8 @@
               <td><%=invoiced_price(invoice)%></td>
               <td><%= invoice.from %></td>
               <td><%= invoice.to %></td>
+
+              <td><%= link_to '<span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>'.html_safe, { :controller => 'invoices', action: 'download', :id => Invoice.encode_id(invoice.id)}, :class => "btn btn-primary"%></td>
               <td><%= link_to '<span class="glyphicon glyphicon-trash lead" aria-hidden="true"></span>'.html_safe, invoice, method: :delete, data: { confirm: 'Are you sure?' } if project.updatable_by?(current_user) %></td>
             </tr>
           <% end %>

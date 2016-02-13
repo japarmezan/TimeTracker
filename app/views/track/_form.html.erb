@@ -71,7 +71,8 @@
       <div class="field form-group">
         <%= f.label :label %>
         </br>
-        <%= f.select :label, options_for_select([1, 2, 3]), {}, { :class => 'form-control', :disabled => @track && (@track.status != nil && @track.status != 'stopped') } %>
+        <%= f.collection_select :label_id, @project.labels, :id, :name, {}, { :class => 'form-control', :disabled => @track && (@track.status != nil && @track.status != 'stopped') } %>
+        <%#= f.collection_select :label_id, options_for_select([1, 2, 3]), {}, { :class => 'form-control', :disabled => @track && (@track.status != nil && @track.status != 'stopped') } %>
       </div>
     </div>
 

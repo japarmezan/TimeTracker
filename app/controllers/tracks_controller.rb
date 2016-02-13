@@ -115,7 +115,7 @@ class TracksController < ApplicationController
     tracks = @project.tracks.where(user_id: current_user.id).where(status: 'stopped').order(created_at: :desc).all
 
     tracks.each { |t|
-      unless t.update(comment: params[:track][:comment], status: 'uploaded')
+      unless t.update(comment: params[:track][:comment], status: 'uploaded', label_id: params[:track][:label_id])
         redirect_to @project, alert: 'Could not add track info.'
       end
     }
@@ -140,11 +140,11 @@ class TracksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def track_params
-      params.require(:track).permit(:start, :end, :comment)
+      params.require(:track).permit(:start, :end, :comment, :label_id)
     end
 
     def track_params_upload
-      params.require(:track).permit(:label, :comment)
+      params.require(:track).permit(:label_id, :comment)
     end
 
     def set_track_project

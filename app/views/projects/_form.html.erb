@@ -11,6 +11,11 @@
   </div>
 
   <div class="field form-group">
+    <%= f.label :invoice_currency %>
+    <%= f.text_field :currency, :class=>"form-control" %>
+  </div>
+
+  <div class="field form-group">
     <%= f.label :category %>    
     <%= f.collection_select :category_id, @categories, :id, :name, {}, { :class=>"form-control" } %>
   </div>

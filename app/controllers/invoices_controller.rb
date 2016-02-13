@@ -25,8 +25,6 @@ class InvoicesController < ApplicationController
   # POST /invoices.json
   def create
     @invoice = Invoice.new(invoice_params)
-    p = Project.find(id: @invoice.project_id)
-    #p.tracks.where()
     respond_to do |format|
       if @invoice.save
         format.html { redirect_to projects_path, notice: 'Invoice was successfully created.' }

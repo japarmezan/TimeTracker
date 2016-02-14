@@ -2,5 +2,10 @@
 # for example lib/tasks/capistrano.rake, and they will automatically be available to Rake.
 
 require File.expand_path('../config/application', __FILE__)
+require 'rubocop/rake_task'
 
+RuboCop::RakeTask.new(:rubocop) do |task|
+  task.patterns = ['app/models', 'app/controllers', 'app/helpers', 'app/authorizers']
+  task.fail_on_error = false
+end
 Rails.application.load_tasks

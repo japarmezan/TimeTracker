@@ -34,6 +34,7 @@ gem 'authority'
 gem 'lazy_high_charts'
 gem 'prawn'
 gem 'prawn-table'
+gem 'rubocop', require: false  
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

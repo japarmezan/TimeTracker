@@ -2,8 +2,9 @@ require 'byebug'
 class ProjectsController < ApplicationController
   before_action :authenticate_user!, except: [:show]
   before_action :set_project, only: [:show, :edit, :update, :destroy, :start, :stop]
-  authorize_actions_for Project, except: [:show,], :actions => {:destroy => :update, :start => :read, :stop => :read, :index_collaborate => :read}
- 
+  authorize_actions_for Project, except: [:show], :actions => {
+    :destroy => :update, :start => :read, :stop => :read, :index_collaborate => :read }
+
   # GET /projects
   # GET /projects.json
   def index
@@ -18,12 +19,12 @@ class ProjectsController < ApplicationController
     @tracks = @project.tracks.order(created_at: :desc)
 
     @track = @tracks.where(user_id: current_user.id).first if user_signed_in?
-    @track = @project.tracks.build if @track == nil || @track.status == 'uploaded'
+    @track = @project.tracks.build if @track.nil? || @track.status == 'uploaded'
 
     @work_time = 0
-    @tracks.each { |t|
-      @work_time = @work_time + (t.end - t.start) if t.end && t.start
-    }
+    @tracks.each do |t|
+      @work_time += (t.end - t.start) if t.end && t.start
+    end
   end
 
   # GET /projects/new
@@ -47,7 +48,7 @@ class ProjectsController < ApplicationController
     @project.category_id = category_params
     respond_to do |format|
       if @project.save
-        @project.set_contributors(contributor_params)
+        @project.configure_contributors(contributor_params)
         format.html { redirect_to @project, notice: 'Project was successfully created.' }
         format.json { render :show, status: :created, location: @project }
       else
@@ -65,7 +66,7 @@ class ProjectsController < ApplicationController
     @project.category_id = category_params
     respond_to do |format|
       if @project.update(project_params)
-        @project.set_contributors(contributor_params)
+        @project.configure_contributors(contributor_params)
         format.html { redirect_to @project, notice: 'Project was successfully updated.' }
         format.json { render :show, status: :ok, location: @project }
       else
@@ -88,21 +89,22 @@ class ProjectsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_project
-      @project = Project.find Project.decode_id(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def project_params
-      params.require(:project).permit(:name, :description, :currency, :client)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_project
+    @project = Project.find Project.decode_id(params[:id])
+  end
 
-    def contributor_params
-      params[:project][:contributors].tr(',', ' ').split
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def project_params
+    params.require(:project).permit(:name, :description, :currency, :client)
+  end
 
-    def category_params
-      params[:project][:category_id]
-    end
+  def contributor_params
+    params[:project][:contributors].tr(',', ' ').split
+  end
+
+  def category_params
+    params[:project][:category_id]
+  end
 end

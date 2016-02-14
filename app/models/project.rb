@@ -15,7 +15,7 @@ class Project < ActiveRecord::Base
   validates :client, presence: true
   validates :category_id, presence: true
 
-  def set_contributors(emails)
+  def configure_contributors(emails)
     add_new_contributors(emails)
     remove_redundant_contributors(emails)
   end
@@ -30,19 +30,16 @@ class Project < ActiveRecord::Base
   end
 
   private
+
   def add_new_contributors(emails)
     emails.each do |e|
-        if coworkers.where(email: e).length == 0 and e != author.email
-          coworkers << User.where(email: e)
-        end
-      end
+      coworkers << User.where(email: e) if coworkers.where(email: e).length == 0 && e != author.email
+    end
   end
 
   def remove_redundant_contributors(emails)
-      coworkers.each do |c|
-        unless emails.include?(c.email)
-          coworkers.delete(c)
-        end
-      end
+    coworkers.each do |c|
+      coworkers.delete(c) unless emails.include?(c.email)
+    end
   end
 end

@@ -1,3 +1,4 @@
+# Charts controller
 class ChartsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_chart, only: [:show, :edit, :update, :destroy]
@@ -21,11 +22,11 @@ class ChartsController < ApplicationController
       f.series(name: "Spent hours", yAxis: 0, data: hours)
 
       f.yAxis [
-        {title: {text: "Spent hours", margin: 70} }
+        { title: { text: "Spent hours", margin: 70 } }
       ]
 
       f.legend(align: 'right', verticalAlign: 'top', y: 75, x: -50, layout: 'vertical')
-      f.chart({defaultSeriesType: "column"})
+      f.chart(defaultSeriesType: "column")
     end
   end
 end

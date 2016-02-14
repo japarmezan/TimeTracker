@@ -1,3 +1,4 @@
+# Labels controller
 class LabelsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_label, only: [:show, :edit, :update, :destroy]
@@ -5,7 +6,7 @@ class LabelsController < ApplicationController
 
   # GET /categories
   # GET /categories.json
-  def index    
+  def index
     @labels = @project.labels
   end
 
@@ -38,7 +39,7 @@ class LabelsController < ApplicationController
 
   # PATCH/PUT /categories/1
   # PATCH/PUT /categories/1.json
-  def update    
+  def update
     @project = Project.find(@label.project_id)
     respond_to do |format|
       if @label.update(label_params)
@@ -62,17 +63,17 @@ class LabelsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_label
-      @label = Label.find Label.decode_id(params[:id])
-    end
 
-    def set_project
-      @project = Project.find Project.decode_id(params[:project_id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_label
+    @label = Label.find Label.decode_id(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def label_params
-      params.require(:label).permit(:name, :wage)
-    end
+  def set_project
+    @project = Project.find Project.decode_id(params[:project_id])
+  end
+
+  def label_params
+    params.require(:label).permit(:name, :wage)
+  end
 end

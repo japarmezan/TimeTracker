@@ -4,15 +4,15 @@ class TracksController < ApplicationController
   before_action :set_project, only: [:start, :stop, :pause, :resume]
   before_action :set_track, only: [:start, :stop, :pause, :resume]
   before_action :set_track_project, only: [:create, :update]
-  authorize_actions_for Track, :actions => {:destroy => :update, :start => :create, :stop => :update, :pause => :update, :resume => :update}
- 
- 
+  authorize_actions_for Track, :actions => {
+    :destroy => :update, :start => :create, :stop => :update, :pause => :update, :resume => :update }
+
   # POST /projects/1/start
-  def start    
+  def start
     authorize_action_for @track
 
     if @track
-      redirect_to @project unless @track.status == nil
+      redirect_to @project unless @track.status.nil?
     end
 
     @track = @project.tracks.build
@@ -35,7 +35,7 @@ class TracksController < ApplicationController
       redirect_to @project unless @track.status == 'started' || @track.status == 'paused' || @track.status == 'resumed'
     end
 
-    if @track.status == 'resumed' || @track.status == 'started' 
+    if @track.status == 'resumed' || @track.status == 'started'
       unless @track.update(:end => DateTime.now, :status => 'stopped')
         redirect_to @project, alert: 'Could not stop work on project.'
       end
@@ -49,11 +49,11 @@ class TracksController < ApplicationController
 
     tracks = @project.tracks.where(user_id: current_user.id).where(status: 'paused').order(created_at: :desc).all
     if tracks.size > 0
-      tracks.each { |t|
+      tracks.each do |t|
         unless t.update(status: 'stopped')
           redirect_to @project, alert: 'Could not stop work on project.'
         end
-      }
+      end
     end
 
     redirect_to @project, notice: 'Work on project stopped.'
@@ -93,7 +93,6 @@ class TracksController < ApplicationController
     end
   end
 
- 
   # POST /tracks
   def create
     authorize_action_for @track
@@ -114,11 +113,11 @@ class TracksController < ApplicationController
     authorize_action_for @track
     tracks = @project.tracks.where(user_id: current_user.id).where(status: 'stopped').order(created_at: :desc).all
 
-    tracks.each { |t|
+    tracks.each do |t|
       unless t.update(comment: params[:track][:comment], status: 'uploaded', label_id: params[:track][:label_id])
         redirect_to @project, alert: 'Could not add track info.'
       end
-    }
+    end
     redirect_to @project, notice: 'Track info successfully added.'
   end
 
@@ -133,29 +132,29 @@ class TracksController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_project
-      @project = Project.find Project.decode_id(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def track_params
-      params.require(:track).permit(:start, :end, :comment, :label_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_project
+    @project = Project.find Project.decode_id(params[:id])
+  end
 
-    def track_params_upload
-      params.require(:track).permit(:label_id, :comment)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def track_params
+    params.require(:track).permit(:start, :end, :comment, :label_id)
+  end
 
-    def set_track_project
-      @project = Project.find Project.decode_id(params[:project_id])
-      @track = @project.tracks.where(user_id: current_user.id).order(created_at: :desc).first
-      @track = @project.tracks.build if @track == nil || @track.status == 'uploaded'
-    end
+  def track_params_upload
+    params.require(:track).permit(:label_id, :comment)
+  end
 
-    def set_track
-      @track = @project.tracks.where(user_id: current_user.id).order(created_at: :desc).first
-      @track = @project.tracks.build if @track == nil || @track.status == 'uploaded'
-    end
+  def set_track_project
+    @project = Project.find Project.decode_id(params[:project_id])
+    @track = @project.tracks.where(user_id: current_user.id).order(created_at: :desc).first
+    @track = @project.tracks.build if @track.nil? || @track.status == 'uploaded'
+  end
 
+  def set_track
+    @track = @project.tracks.where(user_id: current_user.id).order(created_at: :desc).first
+    @track = @project.tracks.build if @track.nil? || @track.status == 'uploaded'
+  end
 end

@@ -1,8 +1,9 @@
+# Invoice controller
 class InvoicesController < ApplicationController
   include InvoicesHelper
   before_action :set_invoice, only: [:destroy, :download]
   before_action :authenticate_user!
-  authorize_actions_for Invoice, :actions => {:download => :update, :invoice_project => :create }
+  authorize_actions_for Invoice, :actions => { :download => :update, :invoice_project => :create }
 
   # GET /invoices
   # GET /invoices.json
@@ -43,16 +44,17 @@ class InvoicesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_invoice
-      @invoice = Invoice.find Invoice.decode_id(params[:id])
-    end
 
-    def set_project
-      @project = Project.find Project.decode_id(params[:id])
-    end
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def invoice_params
-      params.require(:invoice).permit(:from, :to, :project_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_invoice
+    @invoice = Invoice.find Invoice.decode_id(params[:id])
+  end
+
+  def set_project
+    @project = Project.find Project.decode_id(params[:id])
+  end
+
+  def invoice_params
+    params.require(:invoice).permit(:from, :to, :project_id)
+  end
 end

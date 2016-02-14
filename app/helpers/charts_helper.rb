@@ -1,3 +1,4 @@
+# Charts helper
 module ChartsHelper
   def chart_for_project(project)
     emails = project.coworkers.map(&:email) << project.author.email
@@ -16,11 +17,11 @@ module ChartsHelper
       f.series(name: "Spent hours", yAxis: 0, data: hours)
 
       f.yAxis [
-        {title: {text: "Spent hours", margin: 50} }
+        { title: { text: "Spent hours", margin: 50 } }
       ]
 
       f.legend(align: 'right', verticalAlign: 'top', y: 75, x: -50, layout: 'vertical')
-      f.chart({defaultSeriesType: "column"})
+      f.chart(defaultSeriesType: "column")
     end
     chart
   end

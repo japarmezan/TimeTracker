@@ -32,7 +32,6 @@ class CategoriesController < ApplicationController
       if @category.save
         current_user.categories << @category
         format.html { redirect_to categories_path, notice: 'Category was successfully created.' }
-        
         format.json { render :show, status: :created, location: @category }
       else
         format.html { render :new }
@@ -58,7 +57,7 @@ class CategoriesController < ApplicationController
   # DELETE /categories/1
   # DELETE /categories/1.json
   def destroy
-    if @category.projects.size > 0 
+    if @category.projects.size > 0
       redirect_to categories_path, notice: 'Cannot delete category with projects in it.'
       return
     end
@@ -71,13 +70,14 @@ class CategoriesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_category
-      @category = Category.find Category.decode_id(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def category_params
-      params.require(:category).permit(:name, :color)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_category
+    @category = Category.find Category.decode_id(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def category_params
+    params.require(:category).permit(:name, :color)
+  end
 end

@@ -4,12 +4,12 @@ class TracksController < ApplicationController
   before_action :set_project, only: [:start, :stop, :pause, :resume]
   before_action :set_track, only: [:start, :stop, :pause, :resume]
   before_action :set_track_project, only: [:create, :update]
-  authorize_actions_for Project, :actions => {:destroy => :update, :start => :read, :stop => :read, :pause => :read, :resume => :read}
+  authorize_actions_for Track, :actions => {:destroy => :update, :start => :create, :stop => :update, :pause => :update, :resume => :update}
  
  
   # POST /projects/1/start
   def start    
-    authorize_action_for @project
+    authorize_action_for @track
 
     if @track
       redirect_to @project unless @track.status == nil
@@ -29,7 +29,7 @@ class TracksController < ApplicationController
 
   # PATCH /projects/1/stop
   def stop
-    authorize_action_for @project
+    authorize_action_for @track
 
     if @track
       redirect_to @project unless @track.status == 'started' || @track.status == 'paused' || @track.status == 'resumed'
@@ -61,7 +61,7 @@ class TracksController < ApplicationController
 
   # PATCH /projects/1/stop
   def pause
-    authorize_action_for @project
+    authorize_action_for @track
 
     if @track
       redirect_to @project unless @track.status == 'started' || @track.status == 'resumed'
@@ -75,7 +75,7 @@ class TracksController < ApplicationController
   end
 
   def resume
-    authorize_action_for @project
+    authorize_action_for @track
 
     if @track
       redirect_to @project unless @track.status == 'paused'
@@ -96,7 +96,7 @@ class TracksController < ApplicationController
  
   # POST /tracks
   def create
-    authorize_action_for @project
+    authorize_action_for @track
 
     @track = @project.tracks.build(track_params)
     @track.status = 'uploaded'
@@ -111,7 +111,7 @@ class TracksController < ApplicationController
 
   # PATCH/PUT /tracks/1
   def update
-    authorize_action_for @project
+    authorize_action_for @track
     tracks = @project.tracks.where(user_id: current_user.id).where(status: 'stopped').order(created_at: :desc).all
 
     tracks.each { |t|
@@ -125,7 +125,7 @@ class TracksController < ApplicationController
   # DELETE /tracks/1
   def destroy
     @project = Project.find Project.decode_id(params[:project])
-    authorize_action_for @project
+    authorize_action_for @track
 
     track = Track.find(params[:id])
     track.destroy

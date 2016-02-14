@@ -1,16 +1,12 @@
 class InvoicesController < ApplicationController
   include InvoicesHelper
   before_action :set_invoice, only: [:destroy, :download]
+  before_action :authenticate_user!
+  authorize_actions_for Invoice, :actions => {:download => :update, :invoice_project => :create }
 
   # GET /invoices
   # GET /invoices.json
   def index
-    @invoices = Invoice.all
-  end
-
-  # GET /invoices/1
-  # GET /invoices/1.json
-  def show
   end
 
   # GET /invoices/new
@@ -18,11 +14,8 @@ class InvoicesController < ApplicationController
     @invoice = Invoice.new
   end
 
-  # GET /invoices/1/edit
-  def edit
-  end
-
   def download
+    authorize_action_for @invoice
     send_data render_invoice(@invoice), filename: 'invoice.pdf', type: 'application/pdf'
   end
 
@@ -35,20 +28,6 @@ class InvoicesController < ApplicationController
         format.html { redirect_to projects_path, notice: 'Invoice was successfully created.' }
       else
         format.html { render :invoice_project }
-      end
-    end
-  end
-
-  # PATCH/PUT /invoices/1
-  # PATCH/PUT /invoices/1.json
-  def update
-    respond_to do |format|
-      if @invoice.update(invoice_params)
-        format.html { redirect_to @invoice, notice: 'Invoice was successfully updated.' }
-        format.json { render :show, status: :ok, location: @invoice }
-      else
-        format.html { render :edit }
-        format.json { render json: @invoice.errors, status: :unprocessable_entity }
       end
     end
   end

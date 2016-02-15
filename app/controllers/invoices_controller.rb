@@ -26,7 +26,7 @@ class InvoicesController < ApplicationController
     @invoice = Invoice.new(invoice_params)
     respond_to do |format|
       if @invoice.save
-        format.html { redirect_to projects_path, notice: 'Invoice was successfully created.' }
+        format.html { redirect_to invoices_path, notice: 'Invoice was successfully created.' }
       else
         format.html { render :invoice_project }
       end

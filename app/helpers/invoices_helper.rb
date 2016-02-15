@@ -27,19 +27,18 @@ module InvoicesHelper
       pdf.text "Invoice No.: #{invoice.id}", :align => :left
       pdf.text "Date: #{Date.today}", :align => :left
       pdf.move_down 10
-      pdf.text invoice.project.client
+
+      pdf.text "Supplier:", :style => :bold
+      pdf.text invoice.project.author.name, :align => :left
+      pdf.text invoice.project.author.additional, :align => :left
+      pdf.text invoice.project.author.email, :align => :left
     end
 
     pdf.grid([0, 3.2], [1, 4]).bounding_box do
       # Company address
       pdf.move_down 10
-      pdf.text invoice.project.author.email, :align => :left
-      pdf.text "Address", :align => :left
-      pdf.text "Street 1", :align => :left
-      pdf.text "40300 Shah Alam", :align => :left
-      pdf.text "Selangor", :align => :left
-      pdf.text "Tel No: 42", :align => :left
-      pdf.text "Fax No: 42", :align => :left
+      pdf.text "Customer:", :style => :bold
+      pdf.text invoice.project.client
     end
 
     pdf.text "Details of Invoice", :style => :bold

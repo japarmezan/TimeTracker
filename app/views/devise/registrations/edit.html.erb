@@ -14,6 +14,16 @@
   <% end %>
 
   <div class="field form-group">
+    <%= f.label :name %><br />
+    <%= f.text_field :name, :class => "form-control" %>
+  </div>
+
+  <div class="field form-group">
+    <%= f.label :additional_billing_informations %> <i>(will be on invoice header)</i><br />
+    <%= f.text_area :additional, rows: 5, :class => "form-control" %>
+  </div>
+
+  <div class="field form-group">
     <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
     <%= f.password_field :password, autocomplete: "off", :class=>"form-control" %>
   </div>

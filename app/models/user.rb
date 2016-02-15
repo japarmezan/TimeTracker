@@ -9,4 +9,6 @@ class User < ActiveRecord::Base
   has_many :contributors
   has_many :tasks, through: :contributors, source: :project
   has_many :tracks
+
+  validates :name, :additional, presence: true
 end

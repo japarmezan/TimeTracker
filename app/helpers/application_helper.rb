@@ -1,4 +1,3 @@
-require 'byebug'
 # Application helper
 module ApplicationHelper
   def print_errors(source)

@@ -1,3 +1,4 @@
+# InvoicesHelper
 module InvoicesHelper
   def invoiced_price(invoice)
     price = 0

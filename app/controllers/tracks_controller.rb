@@ -1,4 +1,4 @@
-require 'byebug'
+# TracksController
 class TracksController < ApplicationController
   before_action :authenticate_user!
   before_action :set_project, only: [:start, :stop, :pause, :resume]

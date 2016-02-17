@@ -1,2 +1,3 @@
+# CategoriesHelper
 module CategoriesHelper
 end

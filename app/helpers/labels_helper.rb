@@ -1,3 +1,4 @@
+# LabelsHelper
 module LabelsHelper
 	def track_label(label_id)
     if label_id

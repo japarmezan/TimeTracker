@@ -1,8 +1,8 @@
-<p id="notice"><%= notice %></p>
+<%= print_notice(flash) %>
 
 <h1>Listing labels for project</h1>
 
-<table>
+<table class="table table-condensed table-hover">
   <thead>
     <tr>
       <th>Name</th>
@@ -16,8 +16,8 @@
       <tr>
         <td><%= label.name %></td>
         <td><%= label.wage %></td>
-        <td><%= link_to 'Edit', edit_label_path(label) %></td>
-        <td><%= link_to 'Destroy', label, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to '<span class="glyphicon glyphicon-pencil lead" aria-hidden="true"></span>', edit_label_path(label) %></td>
+        <td><%= link_to '<span class="glyphicon glyphicon-trash lead" aria-hidden="true"></span>'.html_safe, label, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

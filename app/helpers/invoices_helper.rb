@@ -55,7 +55,7 @@ module InvoicesHelper
     end
 
     pdf.move_down 200
-    pdf.text ".........................................."
+    pdf.text "..................................................."
     pdf.text "Signature/Company Stamp"
 
     pdf.move_down 10

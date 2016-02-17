@@ -2,7 +2,19 @@
   <div class="panel-body">
 
   	<h3>Project overview</h3>
-	<%= high_chart("some_id", chart_for_project(@project)) if user_signed_in? %>
+  	<div class="row">
+  		<div class="col-md-6">
+			<%= high_chart("col", chart_by_collaborators(@project))%>
+ 		</div>
+
+  		<div class="col-md-6">
+			<%= high_chart("labels", chart_by_labels(@project)) %>
+ 		</div>
+
+  		<div class="col-md-12">
+			<%= high_chart("dates", chart_by_date(@project)) %>
+ 		</div>
+	 </div>
 
  </div>
 </div>

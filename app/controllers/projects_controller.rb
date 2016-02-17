@@ -20,7 +20,7 @@ class ProjectsController < ApplicationController
 
     @track = @tracks.where(user_id: current_user.id).first if user_signed_in?
     @track = @project.tracks.build if @track.nil? || @track.status == 'uploaded'
-
+    
     @work_time = 0
     @tracks.each do |t|
       @work_time += (t.end - t.start) if t.end && t.start

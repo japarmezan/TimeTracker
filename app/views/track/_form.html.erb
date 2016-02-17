@@ -14,14 +14,7 @@
 <% end %>
 
 <%= form_for ([@project, @track]) do |f| %>
-  <% if @track.errors.any? %>
-    <div id="error_explanation">
-      <% @project.errors.full_messages.each do |message| %>
-        <p><%= message %></p>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= print_errors(@track) %>
 
   <div class="row">
     <div class="col-md-6">
@@ -30,9 +23,9 @@
         <%= f.label :start, :class =>"margin-right" %>
 
         <% if (@track.status == 'started' || @track.status == 'paused' || @track.status == 'stopped' || @track.status == 'resumed' ) && @track.start %>
-          <p class="form-control-static"><%= @track.start.in_time_zone("Prague").strftime("%H:%M, %d.%m.%Y") %></p>
+          <p class="form-control-static"><%= @track.start.strftime("%H:%M, %d.%m.%Y") %></p>
         <% else %>
-          <%= f.datetime_select :start, { order: [:day, :month, :year], :use_month_numbers => true }, :class=>"form-control" %>
+          <%= f.datetime_select :start, { order: [:day, :month, :year], :use_month_numbers => true, :default => 0.days.from_now.in_time_zone('Prague') }, :class=>"form-control" %>
         <% end %>
       </div>
 
@@ -48,11 +41,11 @@
         <% end %>
 
         <% if @track.status == 'stopped' && @track.end %>
-          <p class="form-control-static margin-right"><%= @track.end.in_time_zone("Prague").strftime("%H:%M, %d.%m.%Y") %></p>
+          <p class="form-control-static margin-right"><%= @track.end.strftime("%H:%M, %d.%m.%Y") %></p>
         <% end %>
 
         <% if @track.status == nil  %>  
-          <%= f.datetime_select :end, { order: [:day, :month, :year], :use_month_numbers => true }, :class=>"form-control" %>
+          <%= f.datetime_select :end, { order: [:day, :month, :year], :use_month_numbers => true, :default => 0.days.from_now.in_time_zone('Prague') }, :class=>"form-control" %>
         <% end %>
 
       </div>
@@ -72,7 +65,6 @@
         <%= f.label :label %>
         </br>
         <%= f.collection_select :label_id, @project.labels, :id, :name, {}, { :class => 'form-control', :disabled => @track && (@track.status != nil && @track.status != 'stopped') } %>
-        <%#= f.collection_select :label_id, options_for_select([1, 2, 3]), {}, { :class => 'form-control', :disabled => @track && (@track.status != nil && @track.status != 'stopped') } %>
       </div>
     </div>
 

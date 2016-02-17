@@ -1,3 +1,4 @@
+require 'byebug'
 # Application helper
 module ApplicationHelper
   def print_errors(source)
@@ -17,14 +18,29 @@ module ApplicationHelper
 
   def print_notice(flash)
     return '' if flash.empty?
-    notice = flash[:notice]
 
-    html = <<-HTML
-    <div class="alert alert-success alert-dismissible" role="alert">
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      #{notice}
-    </div>
-    HTML
+    if flash.notice
+      notice = flash[:notice]
+
+      html = <<-HTML
+      <div class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        #{notice}
+      </div>
+      HTML
+    end
+
+    if flash.alert
+      alert = flash[:alert]
+
+      html = <<-HTML
+      <div class="alert alert-danger alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        #{alert}
+      </div>
+      HTML
+    end
+
     html.html_safe
   end
 end

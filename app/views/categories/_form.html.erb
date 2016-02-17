@@ -15,10 +15,6 @@
     <%= f.label :name %><br>
     <%= f.text_field :name, :class=>"form-control" %>
   </div>
-  <div class="field form-group">
-    <%= f.label :color %><br>
-    <%= f.select :color, Category.colors.keys, {}, :class=>"form-control" %>
-  </div>
   <div class="actions form-group">
     <%= f.submit 'Create category', :class=>"btn btn-primary" %>
   </div>

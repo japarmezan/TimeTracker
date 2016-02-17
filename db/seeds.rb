@@ -5,6 +5,10 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-5.times do |i|
-  Category.create(name: "Global category ##{i}", color: 1)
-end
+# 5.times do |i|
+#  Category.create(name: "Global category ##{i}", color: 1)
+# end
+
+Category.create(name: "Work")
+Category.create(name: "Hobby")
+Category.create(name: "School")

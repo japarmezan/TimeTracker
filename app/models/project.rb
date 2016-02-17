@@ -20,13 +20,25 @@ class Project < ActiveRecord::Base
     remove_redundant_contributors(emails)
   end
 
-  def tracks_for_user_by_email(email)
-    u = User.where(email: email).first
+  def tracks_for_user_by_name(name)
+    u = User.where(name: name).first
     tracks_for_user(u)
   end
 
   def tracks_for_user(user)
     tracks.where(user_id: user.id)
+  end
+
+  def tracks_for_label(label_id)
+    tracks.where(label_id: label_id)
+  end
+
+  def tracks_by_date_and_user(user, date)
+    tracks.where(user_id: user.id).where(start: date.midnight..(date.midnight + 1.day))
+  end
+
+  def tracks_by_date(date)
+    tracks.where(start: date.midnight..(date.midnight + 1.day))
   end
 
   private

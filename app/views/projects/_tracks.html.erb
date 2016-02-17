@@ -4,6 +4,7 @@
     <table class="table table-condensed table-hover">
       <thead>
         <tr>
+          <th></th>
           <th>By</th>
           <th>From</th>
           <th>To</th>
@@ -16,6 +17,7 @@
       <tbody>
         <% @tracks.each do |track| %>
           <tr>
+            <td><%= label.find(track.label_id).name %></td>
             <td><%= track.user.email if track.user %></td>
             <td class="no-underline"><%= track.start %></td>
             <td><%= track.end %></td>

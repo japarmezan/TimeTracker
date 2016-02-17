@@ -3,7 +3,7 @@ class InvoicesController < ApplicationController
   include InvoicesHelper
   before_action :set_invoice, only: [:destroy, :download]
   before_action :authenticate_user!
-  authorize_actions_for Invoice, :actions => { :download => :update, :invoice_project => :create }
+  authorize_actions_for Invoice, :actions => { :download => :update, :invoice_project => :create, :destroy => :update }
 
   # GET /invoices
   # GET /invoices.json

@@ -1,13 +1,15 @@
-<%= form_for(@invoice) do |f| %>
-  <%= print_errors(@invoice) %>
+<div class="form-inline">
 
-    <div class="col-md-3">
+  <%= form_for(@invoice) do |f| %>
+    <%= print_errors(@invoice) %>
 
+      <p>Choose time frame for invoice: </p>
       <div class="field form-group">
         <%= f.label :from, :class =>"margin-right" %>
-        <%= f.datetime_select :from, { order: [:day, :month, :year], :use_month_numbers => true }, :class=>"form-control" %>
+        <%= f.datetime_select :from, { order: [:day, :month, :year], :use_month_numbers => true }, :class=>"form-control"  %>
       </div>
 
+      </br>
       </br>
 
       <div class="field form-group">
@@ -16,8 +18,12 @@
       </div>
       </br>
       <%= f.hidden_field :project_id, :value => Project.find(Project.decode_id(params[:id])).id %>
+
+      </br>
+      </br>
+
       <div class="actions form-group">
         <%= f.submit 'Create invoice', :class=>"btn btn-primary" %>
       </div>
-    </div>
-<% end %>
+  <% end %>
+</div>

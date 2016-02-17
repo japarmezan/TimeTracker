@@ -7,7 +7,7 @@
       <thead>
         <tr>
           <th>Project name</th>
-          <th>Invoiced price</th>
+          <th>Total price</th>
           <th>Invoice from</th>
           <th>Invoice to</th>
           <th colspan="2">Actions</th>
@@ -20,8 +20,8 @@
             <tr>
               <td class="h3 no-underline"><%= link_to project.name, project %></td>
               <td><%=invoiced_price(invoice)%></td>
-              <td><%= invoice.from %></td>
-              <td><%= invoice.to %></td>
+              <td><%= invoice.from.in_time_zone("Prague").strftime("%H:%M, %d.%m.%Y") %></td>
+              <td><%= invoice.to.in_time_zone("Prague").strftime("%H:%M, %d.%m.%Y") %></td>
 
               <td><%= link_to '<span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>'.html_safe, { :controller => 'invoices', action: 'download', :id => Invoice.encode_id(invoice.id)}, :class => "btn btn-primary"%></td>
               <td><%= link_to '<span class="glyphicon glyphicon-trash lead" aria-hidden="true"></span>'.html_safe, invoice, method: :delete, data: { confirm: 'Are you sure?' } if project.updatable_by?(current_user) %></td>

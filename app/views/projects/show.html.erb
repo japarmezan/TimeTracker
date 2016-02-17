@@ -14,7 +14,7 @@
 
 		<% unless user_signed_in? %>
 			<dt> Creator </dt>
-			<dd><%= User.find(@project.author_id).email %></dd>
+			<dd><%= User.find(@project.author_id).name %></dd>
 		<% end %>
 
 		<dt> Contributors </dt>
@@ -25,11 +25,11 @@
 				<% end %>
 			</dd>
 		<% else %>
-	  		<dd><%= @project.coworkers.map {|t| t.email}.join(', ') %></dd>
+	  		<dd><%= @project.coworkers.map {|t| t.name}.join(', ') %></dd>
 	  	<% end %>
 
 		<dt> Client</dt>
-	  	<dd class ="pre-wrap"><%= @project.client %></dd>
+	  	<dd><%= @project.client %></dd>
 
   		<dt> Total work time </dt>
 	  	<dd><%= distance_of_time_in_words(@work_time) %></dd>
@@ -41,7 +41,7 @@
 
     <%= link_to '<span class="glyphicon glyphicon-euro" aria-hidden="true"></span> Manage labels'.html_safe, project_labels_path(@project), :class => "btn btn-primary" if user_signed_in? %>
 
-    <%= link_to '<span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"></span> Invoice'.html_safe, invoice_project_path(@project), :class => "btn btn-primary" if user_signed_in? and @project.author == current_user%>
+    <%= link_to '<span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"></span> Create Invoice'.html_safe, invoice_project_path(@project), :class => "btn btn-primary" if user_signed_in? and @project.author == current_user%>
 
  </div>
 </div>
@@ -87,7 +87,7 @@
 	</div>
 <% end %>
 
-<%= render 'charts' %>
 <%= render 'track/tracks' %>
+<%= render 'charts' if user_signed_in? %>
 
 

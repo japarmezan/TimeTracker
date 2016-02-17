@@ -16,14 +16,14 @@ class TracksController < ApplicationController
     end
 
     @track = @project.tracks.build
-    @track.start = DateTime.now
+    @track.start = DateTime.now + 1.hour
     @track.user_id = current_user.id
     @track.status = 'started'
 
     if @track.save
       redirect_to @project, notice: 'Work on project started.'
     else
-      redirect_to @project, alert: 'Could not start work on project.'
+      redirect_to @project, alert: 'Could not start work on project. ' + @track.errors.full_messages.join(', ') + '.'
     end
   end
 
@@ -36,14 +36,14 @@ class TracksController < ApplicationController
     end
 
     if @track.status == 'resumed' || @track.status == 'started'
-      unless @track.update(:end => DateTime.now, :status => 'stopped')
-        redirect_to @project, alert: 'Could not stop work on project.'
+      unless @track.update(:end => DateTime.now + 1.hour, :status => 'stopped')
+        redirect_to @project, alert: 'Could not stop work on project. ' + @track.errors.full_messages.join(', ') + '.'
       end
     end
 
     if @track.status == 'paused'
       unless @track.update(:status => 'stopped')
-        redirect_to @project, alert: 'Could not stop work on project.'
+        redirect_to @project, alert: 'Could not stop work on project. ' + @track.errors.full_messages.join(', ') + '.'
       end
     end
 
@@ -51,7 +51,7 @@ class TracksController < ApplicationController
     if tracks.size > 0
       tracks.each do |t|
         unless t.update(status: 'stopped')
-          redirect_to @project, alert: 'Could not stop work on project.'
+          redirect_to @project, alert: 'Could not stop work on project. ' + t.errors.full_messages.join(', ') + '.'
         end
       end
     end
@@ -67,10 +67,10 @@ class TracksController < ApplicationController
       redirect_to @project unless @track.status == 'started' || @track.status == 'resumed'
     end
 
-    if @track.update(:end => DateTime.now, :status => 'paused')
+    if @track.update(:end => DateTime.now + 1.hour, :status => 'paused')
       redirect_to @project, notice: 'Work on project paused.'
     else
-      redirect_to @project, alert: 'Could not pause work on project.'
+      redirect_to @project, alert: 'Could not pause work on project. ' + @track.errors.full_messages.join(', ') + '.'
     end
   end
 
@@ -82,14 +82,14 @@ class TracksController < ApplicationController
     end
 
     @track = @project.tracks.build
-    @track.start = DateTime.now
+    @track.start = DateTime.now + 1.hour
     @track.user_id = current_user.id
     @track.status = 'resumed'
 
     if @track.save
       redirect_to @project, notice: 'Work on project resumed.'
     else
-      redirect_to @project, alert: 'Could not resume work on project.'
+      redirect_to @project, alert: 'Could not resume work on project. ' + @track.errors.full_messages.join(', ') + '.'
     end
   end
 
@@ -104,7 +104,7 @@ class TracksController < ApplicationController
     if @track.save
       redirect_to @project, notice: 'Track successfully added to project.'
     else
-      redirect_to @project, alert: 'Could not add track to project.'
+      redirect_to @project, alert: 'Could not add track to project, because: ' + @track.errors.full_messages.join(', ') + '.'
     end
   end
 
@@ -124,9 +124,9 @@ class TracksController < ApplicationController
   # DELETE /tracks/1
   def destroy
     @project = Project.find Project.decode_id(params[:project])
-    authorize_action_for @track
 
     track = Track.find(params[:id])
+    authorize_action_for track
     track.destroy
     redirect_to project_path(params[:project]), notice: 'Track was successfully deleted.'
   end

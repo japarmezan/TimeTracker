@@ -62,7 +62,7 @@ module ChartsHelper
       hours << h
     end
 
-    dates = dates.map{ |d| d.strftime("%d.%m.")}
+    dates = dates.map { |d| d.strftime("%d.%m.") }
 
     chart = LazyHighCharts::HighChart.new('line') do |f|
       f.title(text: "Hours spent last week")
@@ -82,8 +82,7 @@ module ChartsHelper
   def chart_by_date_and_user(project)
     dates = (3.days.ago.to_date..Date.today)
     users = project.contributors
-    series = Hash.new
-
+    series = {}
 
     users.each do |user|
       hours = 0
@@ -98,7 +97,7 @@ module ChartsHelper
       series[user.name] = hours
     end
 
-    dates = dates.map{ |d| d.strftime("%d.%m.")}
+    dates = dates.map { |d| d.strftime("%d.%m.") }
     chart = LazyHighCharts::HighChart.new('line') do |f|
       f.title(text: "Hours spent last month")
       f.xAxis(categories: dates)

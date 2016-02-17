@@ -3,6 +3,6 @@ class Label < ActiveRecord::Base
   belongs_to :project
   enum color: [:red, :green, :blue, :orange]
 
-  validates :name, :uniqueness => {:scope => :project}
+  validates :name, :uniqueness => { :scope => :project }
   validates :wage, presence: true
 end

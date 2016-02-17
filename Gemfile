@@ -25,9 +25,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'pry'
 gem 'better_errors'
 gem 'devise'
-gem 'cancancan'
 gem 'rolify'
-gem 'paperclip', '~> 4.3'
 gem 'bootstrap-sass'
 gem 'hashids'
 gem 'authority'
@@ -64,4 +62,7 @@ end
 group :production do
   # gem 'pg'
   gem 'rails_12factor'
+  gem 'pg'
 end
+
+ruby '2.0.0'

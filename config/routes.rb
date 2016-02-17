@@ -12,7 +12,6 @@ Rails.application.routes.draw do
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
-
   get 'projects_collaborate', to: 'projects#index_collaborate'
   get 'projects/:id/invoice', to: 'invoices#invoice_project', as: 'invoice_project'
   get 'invoices/:id/download', to: 'invoices#download'

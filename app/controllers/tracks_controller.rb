@@ -14,7 +14,6 @@ class TracksController < ApplicationController
     if @track
       redirect_to @project unless @track.status.nil?
     end
-
     @track = @project.tracks.build
     @track.start = DateTime.now + 1.hour
     @track.user_id = current_user.id

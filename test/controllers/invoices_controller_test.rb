@@ -18,7 +18,7 @@ class InvoicesControllerTest < ActionController::TestCase
 
   test "should create invoice" do
     assert_difference('Invoice.count') do
-      post :create, invoice: {  }
+      post :create, invoice: {}
     end
 
     assert_redirected_to invoice_path(assigns(:invoice))

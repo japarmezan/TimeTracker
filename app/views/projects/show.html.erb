@@ -49,7 +49,7 @@
 <% if user_signed_in? %>
 	<div class="panel panel-default">
 	  <div class="panel-body">
-	  	<h2 class="mragin-bottom">Project tracking</h2>
+	  	<h3 class="mragin-bottom">Project tracking</h3>
 	  	</br>
 
 		<% if @track.status == nil %>	
@@ -71,15 +71,10 @@
 			<%= button_to 'Stop', { controller: "tracks", action: "stop", id: @project }, { :class=>"btn-xlg btn btn-danger margin-bottom" } %>
 		<% end %>
 
-		</br>
-
 		<% if @track.status == 'stopped' %>				
-	  		<p class="lead">Job finished!</p>
+	  		<h3 class="text-primary">Job finished!</h3>
 		<% end %>
 
-	      
-
-		</br>
 
 
 		<%= render 'track/form' %>

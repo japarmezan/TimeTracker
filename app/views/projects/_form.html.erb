@@ -12,27 +12,27 @@
 
   <div class="field form-group">
     <%= f.label :invoice_currency %>
-    <%= f.text_field :currency, :class=>"form-control" %>
+    <%= f.select :currency, options_for_select([['eur' ,'eur'], ['czk', 'czk'], ['svk', 'svk'], ['usd', 'usd']]), {}, { :class=>"form-control" } %>
   </div>
 
   <div class="field form-group">
     <%= f.label :category %>    
     <%= f.collection_select :category_id, @categories, :id, :name, {}, { :class=>"form-control" } %>
   </div>
-  <div class="field form-group">
-    <%= f.label :client %>
-    <%= f.text_area :client, :class=>"form-control" %>
-  </div>
+
   <%= link_to '+ Add new category', new_category_path %>
   <p id="notice" class="text-success"><%= notice %></p>
 
+  <div class="field form-group">
+    <%= f.label 'Client information' %>
+    <%= f.text_area :client, :class=>"form-control" %>
+  </div>
 
   <div class="field form-group">
-    <%= f.label :contributors %>    
+    <%= f.label 'Contributors (emails)' %>    
     <%= f.text_area :contributors, :value => @project.coworkers.map {|t| t.email}.join(', '), :class=>"form-control" %>
   </div>
 
-  <br />
   <div class="actions form-group">
     <%= f.submit 'Create Project', :class=>"btn btn-primary", :style => "margin-top: 2em;" %>
   </div>

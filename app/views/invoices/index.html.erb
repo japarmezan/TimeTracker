@@ -1,6 +1,8 @@
+<%= print_notice(flash) %>
+
 <div class="panel panel-default">
   <div class="panel-body">
-    <h1>Your invoices:</h1>
+    <h2>Your invoices:</h2>
 
     
     <table class="table table-condensed table-hover">
@@ -18,12 +20,12 @@
         <% current_user.projects.each do |project| %>
           <% project.invoices.each do |invoice| %>
             <tr>
-              <td class="h3 no-underline"><%= link_to project.name, project %></td>
+              <td class="h4 no-underline"><%= link_to project.name, project %></td>
               <td><%=invoiced_price(invoice)%></td>
-              <td><%= invoice.from.in_time_zone("Prague").strftime("%H:%M, %d.%m.%Y") %></td>
-              <td><%= invoice.to.in_time_zone("Prague").strftime("%H:%M, %d.%m.%Y") %></td>
+              <td><%= invoice.from.strftime("%H:%M, %d.%m.%Y") %></td>
+              <td><%= invoice.to.strftime("%H:%M, %d.%m.%Y") %></td>
 
-              <td><%= link_to '<span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>'.html_safe, { :controller => 'invoices', action: 'download', :id => Invoice.encode_id(invoice.id)}, :class => "btn btn-primary"%></td>
+              <td><%= link_to '<span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>'.html_safe, { :controller => 'invoices', action: 'download', :id => Invoice.encode_id(invoice.id)}, :class => "lead"%></td>
               <td><%= link_to '<span class="glyphicon glyphicon-trash lead" aria-hidden="true"></span>'.html_safe, invoice, method: :delete, data: { confirm: 'Are you sure?' } if project.updatable_by?(current_user) %></td>
             </tr>
           <% end %>

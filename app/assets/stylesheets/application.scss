@@ -12,36 +12,52 @@
  *
  */
 
-/*@import url(https://fonts.googleapis.com/css?family=Cabin+Sketch:700);*/
-@import url(https://fonts.googleapis.com/css?family=Fredericka+the+Great);
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
+@import url(https://fonts.googleapis.com/css?family=Special+Elite);
+@import url(https://fonts.googleapis.com/css?family=Cinzel+Decorative:700);
 
-$brown: #704E2E;
+$brown: #575455;
+$brown: #454444;
 $light-brown: #79745C;
-$green: #709176;
+$green: #839C76;
+$green: #86B079;
+$text-color: #444;
+
+$jumbotron-heading-font-size: 50px;
 
 $navbar-inverse-bg: $brown;
+$navbar-inverse-link-hover-bg: $green;
 $gray-light: #E6F8B2;
 
-$headings-font-family: 'Fredericka the Great', Helvetica, Arial, sans-serif;
+$headings-font-family: 'Cinzel Decorative', Helvetica, Arial, sans-serif;
 $font-family-base: 'Roboto', Open Sans;
 $font-size-base: 16px;
+
 $brand-primary: $green;
 $input-border-focus: $green;
 $link-hover-decoration: none;
 $table-border-color: $light-brown;
 
-$panel-bg: #f6f6f6;
+$body-bg: #fff;
+$panel-bg: rgba(255, 255, 255, 0.9);
+$panel-default-border: transparent;
+
 $panel-border-radius: 0px;
-$panel-body-padding: 20px;
+$panel-body-padding: 30px;
+
 $border-radius-base: 0px;
 $border-radius-large: 0px;
 $border-radius-small: 0px;
+
 $btn-default-border: transparent;
 $btn-success-border: transparent;
 $btn-warning-border: transparent;
 $btn-danger-border: transparent;
 $btn-primary-border: transparent;
+
+body {
+	background-image: image-url('wild_flowers.png');
+}
 
 .margin-top {
 	margin-top: 2em;
@@ -56,16 +72,16 @@ $btn-primary-border: transparent;
 }
 
 .btn-xlg {
-	padding: 0.5em 1em 0.5em 1em  !important;
+	padding: 0.7em 1em 0.7em 1em  !important;
 	font-size: 2em !important;
 	font-family: $headings-font-family;
-	margin: 0.5em;	
+	margin: 0.5em 0.5em 1em 0em;	
 }
 
 form.button_to
 {
 	display: inline-block !important;
-	width: 12em;	
+	width: 13em;	
 }
 
 .pre-wrap

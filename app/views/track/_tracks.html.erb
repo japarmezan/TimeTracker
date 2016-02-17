@@ -36,7 +36,7 @@
         <% @tracks.each do |track| %>
 
           <% if user_signed_in? %>
-            <tr class="<%= 'warning' if track.user_id == current_user.id && @project.contributors.size > 0 %>
+            <tr class="<%= 'success' if track.user_id == current_user.id && @project.contributors.size > 0 %>
               <%= 'warning' if track.user_id == current_user.id && track.status == 'paused' %>
               <%= 'success' if track.user_id == current_user.id && track.status == 'started' || track.status == 'resumed' %>
               <%= 'danger' if track.user_id == current_user.id && track.status == 'stopped'%>">
@@ -45,7 +45,7 @@
           <% end %>
 
             <td><%= track_label(track.label_id) %></td>
-            <td class="text-overflow"><%= User.find(track.user_id).name %></td>
+            <td class="text-overflow "><%= User.find(track.user_id).name %></td>
 
             <% if user_signed_in? %>
               <td><%= track.start.strftime("%H:%M, %d.%m.%Y") if track.start %></td>

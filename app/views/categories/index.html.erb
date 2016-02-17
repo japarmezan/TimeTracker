@@ -1,27 +1,32 @@
 <%= print_notice(flash) %>
 
-<h1>Listing Categories</h1>
 
-<table class="table table-hover">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th colspan="2"></th>
-    </tr>
-  </thead>
+<div class="panel panel-default">
+  <div class="panel-body">
+    <h2>Listing Categories</h2>
 
-  <tbody>
-    <% @categories.each do |category| %>
-      <tr>
-        <td><%= category.name %></td>
-        <td>
-          <%= link_to '<span class="glyphicon glyphicon-pencil lead" aria-hidden="true"></span>'.html_safe, edit_category_path(category) if category.user_id == current_user.id %> </td>
-        <td><%= link_to '<span class="glyphicon glyphicon-trash lead" aria-hidden="true"></span>'.html_safe, category, method: :delete, data: { confirm: 'Are you sure?' } if category.user_id == current_user.id %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th colspan="2"></th>
+        </tr>
+      </thead>
 
-<br>
+      <tbody>
+        <% @categories.each do |category| %>
+          <tr>
+            <td><%= category.name %></td>
+            <td>
+              <%= link_to '<span class="glyphicon glyphicon-pencil lead" aria-hidden="true"></span>'.html_safe, edit_category_path(category) if category.user_id == current_user.id %> </td>
+            <td><%= link_to '<span class="glyphicon glyphicon-trash lead" aria-hidden="true"></span>'.html_safe, category, method: :delete, data: { confirm: 'Are you sure?' } if category.user_id == current_user.id %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
 
-<%= link_to 'New Category', new_category_path, :class => "btn btn-primary" %>
+    <%= link_to 'New Category', new_category_path, :class => "btn btn-primary" %>
+
+
+  </div>
+</div>
